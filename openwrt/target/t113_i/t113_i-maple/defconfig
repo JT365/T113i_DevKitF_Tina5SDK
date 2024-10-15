@@ -4,11 +4,11 @@
 #
 CONFIG_MODULES=y
 CONFIG_HAVE_DOT_CONFIG=y
-CONFIG_TARGET_t113_i_evb1_auto=y
+# CONFIG_TARGET_t113_i_evb1_auto is not set
 # CONFIG_TARGET_t113_i_evb1_auto_nand is not set
-# CONFIG_TARGET_t113_i_maple is not set
-CONFIG_TARGET_t113_i_evb1_auto_Default=y
-CONFIG_TARGET_BOARD="t113_i-evb1_auto"
+CONFIG_TARGET_t113_i_maple=y
+CONFIG_TARGET_t113_i_maple_Default=y
+CONFIG_TARGET_BOARD="t113_i-maple"
 CONFIG_TARGET_SUBTARGET="generic"
 CONFIG_TARGET_PROFILE="Default"
 CONFIG_TARGET_ARCH_PACKAGES="arm_cortex-a7_neon"
