@@ -53,7 +53,6 @@
 		tv0 = &tv0;
 		tvd = &tvd;
 		tvd0 = &tvd0;
-		gmac0 = &gmac0;
 		share_space0 = &share_space0;
 	};
 
@@ -517,29 +516,27 @@
 				function = "gpio_in";
 			};
 			csi0_pins_a: csi0@0 {
-				/*pins = "PE2", "PE0", "PE1", "PE4", "PE5",
+				pins = "PE2", "PE0", "PE1", "PE4", "PE5",
 						 "PE6", "PE7", "PE8", "PE9", "PE10", "PE11";
-				*/
 				function = "ncsi0";
 				drive-strength = <10>;
 			};
 			csi0_pins_b: csi0@1 {
-				/*pins = "PE2", "PE0", "PE1", "PE4", "PE5",
+				pins = "PE2", "PE0", "PE1", "PE4", "PE5",
 						 "PE6", "PE7", "PE8", "PE9", "PE10", "PE11";
 				function = "io_disabled";
-				*/
 				drive-strength = <10>;
 			};
 
 			lvds0_pins_a: lvds0@0 {
-				/*pins  = "PD0", "PD1", "PD2", "PD3", "PD4", "PD5", "PD6", "PD7", "PD8", "PD9";*/
+				pins  = "PD0", "PD1", "PD2", "PD3", "PD4", "PD5", "PD6", "PD7", "PD8", "PD9";
 				function = "lvds0";
 				drive-strength = <30>;
 				bias-disable;
 			};
 
 			lvds0_pins_b: lvds0@1 {
-				/*pins  = "PD0", "PD1", "PD2", "PD3", "PD4", "PD5", "PD6", "PD7", "PD8", "PD9";*/
+				pins  = "PD0", "PD1", "PD2", "PD3", "PD4", "PD5", "PD6", "PD7", "PD8", "PD9";
 				function = "io_disabled";
 				drive-strength = <30>;
 				bias-disable;
@@ -722,62 +719,22 @@
 			resets = <&ccu RST_BUS_CE>;
 			status = "okay";
 		};
-#if 0
-		mdio0: mdio0@4500048 {
-			compatible = "allwinner,sunxi-mdio";
-			#address-cells = <1>;
-			#size-cells = <0>;
-			reg = <0x0 0x04500048 0x0 0x8>;
-			gmac0_phy0: ethernet-phy@1 {
-				reg = <1>;
-				max-speed = <1000>;  /* Max speed capability */
-				reset-gpios = <&pio PE 13 GPIO_ACTIVE_LOW>;
-				/* PHY datasheet rst time */
-				reset-assert-us = <10000>;
-				reset-deassert-us = <15000>;
-			};
-		};
 
-		gmac0: gmac0@4500000 {
+		gmac0: eth@4500000 {
 			compatible = "allwinner,sunxi-gmac";
 			reg = <0x0 0x04500000 0x0 0x10000>,
 			      <0x0 0x03000030 0x0 0x4>;
 			interrupts = <GIC_SPI 46 IRQ_TYPE_LEVEL_HIGH>;
 			interrupt-names = "gmacirq";
 			clocks = <&ccu CLK_BUS_EMAC0>, <&ccu CLK_EMAC0_25M>;
-			clock-names = "gmac", "phy25m";
+			clock-names = "gmac", "ephy";
 			resets = <&ccu RST_BUS_EMAC0>;
-			phy-handle = <&gmac0_phy0>;
+			device_type = "gmac0";
+			gmac-power0;
+			gmac-power1;
+			gmac-power2;
 			status = "disabled";
 		};
-#endif
-	       mdio0: mdio0@4500048 {
-                        compatible = "allwinner,sunxi-mdio";
-                        #address-cells = <1>;
-                        #size-cells = <0>;
-                        reg = <0x0 0x04500048 0x0 0x8>;
-                        gmac0_phy0: ethernet-phy@1 {
-                                reg = <1>;
-                                max-speed = <100>;  /* Max speed capability */
-                                reset-gpios = <&pio PE 13 GPIO_ACTIVE_LOW>;
-                                /* PHY datasheet rst time */
-                                reset-assert-us = <10000>;
-                                reset-deassert-us = <15000>;
-                        };
-                };
-
-                gmac0: gmac0@4500000 {
-                        compatible = "allwinner,sunxi-gmac";
-                        reg = <0x0 0x04500000 0x0 0x10000>,
-                              <0x0 0x03000030 0x0 0x4>;
-                        interrupts = <GIC_SPI 46 IRQ_TYPE_LEVEL_HIGH>;
-                        interrupt-names = "gmacirq";
-                        clocks = <&ccu CLK_BUS_EMAC0>, <&ccu CLK_EMAC0_25M>;
-                        clock-names = "gmac", "phy25m";
-                        resets = <&ccu RST_BUS_EMAC0>;
-                        phy-handle = <&gmac0_phy0>;
-                        status = "disabled";
-                };
 
 		sdc2: sdmmc@4022000 {
 			compatible = "allwinner,sunxi-mmc-v4p6x";
@@ -792,8 +749,8 @@
 			resets = <&ccu RST_BUS_MMC2>;
 			reset-names = "rst";
 			pinctrl-names = "default","sleep";
-			pinctrl-0 = <&sdc2_pins_a>;
-			pinctrl-1 = <&sdc2_pins_b>;
+			//pinctrl-0 = <&sdc2_pins_a>;
+			//pinctrl-1 = <&sdc2_pins_b>;
 			bus-width = <4>;
 			req-page-count = <2>;
 			cap-mmc-highspeed;
@@ -1214,16 +1171,6 @@
 			};
 		};
 
-		gpadc_battery: gpadc_battery@2009000 {
-				compatible = "allwinner,sunxi-gpadc-battery";
-				reg = <0x0 0x02009000 0x0 0x400>;
-				interrupts = <GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>;
-				clocks = <&ccu CLK_BUS_GPADC>;
-				clock-names = "bus";
-				resets = <&ccu RST_BUS_GPADC>;
-				status = "disabled";
-		};
-
 		gpadc: gpadc@2009000 {
 			compatible = "allwinner,sunxi-gpadc";
 			reg = <0x0 0x02009000 0x0 0x400>;
@@ -1266,26 +1213,31 @@
 				pinctrl-1 = <&csi0_pins_b>;
 				device_id = <0>;
 				iommus = <&mmu_aw 1 1>;
-				status = "disabled";
+				status = "okay";
 			};
 			isp0: isp@5809410 {
 				compatible = "allwinner,sunxi-isp";
-				device_id = <0>;
+				reg = <0x0 0x05809410 0x0 0x10>;
+				device_id = <0xfe>;
+
 				status = "okay";
 			};
 			isp1: isp@5809420 {
 				compatible = "allwinner,sunxi-isp";
-				device_id = <1>;
+				reg = <0x0 0x05809420 0x0 0x10>;
+				device_id = <0xff>;
 				status = "okay";
 			};
 			scaler0: scaler@5809430 {
 				compatible = "allwinner,sunxi-scaler";
-				device_id = <0>;
+				reg = <0x0 0x05809430 0x0 0x10>;
+				device_id = <0xfe>;
 				status = "okay";
 			};
 			scaler1: scaler@5809440 {
 				compatible = "allwinner,sunxi-scaler";
-				device_id = <1>;
+				reg = <0x0 0x05809440 0x0 0x10>;
+				device_id = <0xff>;
 				status = "okay";
 			};
 			actuator0: actuator@5809450 {
@@ -1551,8 +1503,6 @@
 			resets = <&ccu RST_BUS_TVE_TOP>,
 				 <&ccu RST_BUS_TVE>;
 			reset-names = "rst_bus_tve_top", "rst_bus_tve";
-			assigned-clock-parents = <&ccu CLK_PLL_VIDEO1_4X>;
-			assigned-clocks = <&ccu CLK_TVE>;
 
 			device_type = "tv0";
 			pinctrl-names = "active","sleep";
@@ -1568,7 +1518,7 @@
 			resets = <&ccu RST_BUS_SPINLOCK>;
 			reset-names = "rst";
 			num-locks = <32>;
-			status = "okay";
+			status = "disabled";
 		};
 		/* old msgbox in dts
 		msgbox: msgbox@3003000 {
@@ -1592,11 +1542,6 @@
 			rpmsg_read_channel-1 = <0>;
 			rpmsg_write_channel-1 = <0>;
 		}; */
-
-		/*
-		 * channel0~3 : arm -> dsp
-		 * channel4~7 : arm -> cpus
-		 */
 		msgbox: msgbox@3003000 {
 			compatible = "allwinner,sun8iw20-msgbox";
 			#mbox-cells = <1>;
@@ -1607,13 +1552,33 @@
 					<GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
 					<GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&ccu CLK_BUS_MSGBOX0>;
-			clock-names = "msgbox";
 			resets = <&ccu RST_BUS_MSGBOX0>;
 			reset-names = "rst";
 			local_id = <0>;
 			status = "okay";
 		};
 
+		hdmi: hdmi@5500000 {
+			compatible = "allwinner,sunxi-hdmi";
+			reg = <0x0 0x05500000 0x0 0xfffff>;
+			interrupts = <GIC_SPI 93 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&ccu CLK_BUS_HDMI>,
+				<&ccu CLK_HDMI_24M>,
+				<&ccu CLK_HDMI_CEC>,
+				<&ccu CLK_TCON_TV>;
+			clock-names = "clk_bus_hdmi",
+					"clk_ddc",
+					"clk_cec",
+					"clk_tcon_tv";
+			resets = <&ccu RST_BUS_HDMI_SUB>,
+				<&ccu RST_BUS_HDMI_MAIN>;
+			reset-names = "rst_bus_sub",
+				      "rst_bus_main";
+			assigned-clocks = <&ccu CLK_HDMI_CEC>;
+			assigned-clock-parents = <&ccu CLK_HDMI_CEC_32K>;
+			assigned-clock-rates = <0>;
+			status = "okay";
+		};
 		usbc0:usbc0@0 {
 			device_type = "usbc0";
 			compatible = "allwinner,sunxi-otg-manager";
@@ -1705,119 +1670,10 @@
 			status = "disable";
 		};
 
-		/* audio new driver*/
-		hdmi_codec:hdmi_codec {
-			#sound-dai-cells = <0>;
-			compatible	= "allwinner,sunxi-snd-codec-hdmi";
-			status = "disabled";
-		};
-
-		i2s0_plat:i2s0_plat@2032000 {
-			#sound-dai-cells = <0>;
-			compatible = "allwinner,sunxi-snd-plat-i2s";
-			reg= <0x0 0x02032000 0x0 0xA0>;
-			resets = <&ccu RST_BUS_I2S0>;
-			clocks = <&ccu CLK_PLL_AUDIO0>, /* 98.304M / 90.3168M */
-				 <&ccu CLK_I2S0>,
-				 <&ccu CLK_BUS_I2S0>;
-			clock-names = "clk_pll_audio", "clk_i2s", "clk_bus_i2s";
-			dmas		= <&dma 3>, <&dma 3>;
-			dma-names	= "tx", "rx";
-			playback-cma	= <128>;
-			capture-cma	= <128>;
-			tx-fifo-size	= <128>;
-			rx-fifo-size	= <128>;
-			status = "disabled";
-		};
-
-		i2s0_mach:i2s0_mach{
-			compatible = "allwinner,sunxi-snd-mach";
-			soundcard-mach,name		= "sndi2s0";
-			soundcard-mach,format		= "i2s";
-			soundcard-mach,slot-num		= <2>;
-			soundcard-mach,slot-width	= <32>;
-			status = "disabled";
-			soundcard-mach,cpu {
-				sound-dai = <&i2s0_plat>;
-			};
-			soundcard-mach,codec {
-			};
-		};
-
-		i2s1_plat:i2s1_plat@2033000 {
-			#sound-dai-cells = <0>;
-			compatible = "allwinner,sunxi-snd-plat-i2s";
-			reg= <0x0 0x02033000 0x0 0xA0>;
-			resets = <&ccu RST_BUS_I2S1>;
-			clocks = <&ccu CLK_PLL_AUDIO0>, /* 98.304M / 90.3168M */
-				 <&ccu CLK_I2S1>,
-				 <&ccu CLK_BUS_I2S1>;
-			clock-names = "clk_pll_audio", "clk_i2s", "clk_bus_i2s";
-			dmas		= <&dma 4>, <&dma 4>;
-			dma-names	= "tx", "rx";
-			playback-cma	= <128>;
-			capture-cma	= <128>;
-			tx-fifo-size	= <128>;
-			rx-fifo-size	= <128>;
-			status = "disabled";
-		};
-
-		i2s1_mach:i2s1_mach{
-			compatible = "allwinner,sunxi-snd-mach";
-			soundcard-mach,name		= "sndi2s1";
-			soundcard-mach,format		= "i2s";
-			soundcard-mach,slot-num		= <2>;
-			soundcard-mach,slot-width	= <32>;
-			status = "disabled";
-			soundcard-mach,cpu {
-				sound-dai = <&i2s1_plat>;
-			};
-			soundcard-mach,codec {
-			};
-		};
-
-		i2s2_plat:i2s2_plat@2034000 {
-			#sound-dai-cells = <0>;
-			compatible = "allwinner,sunxi-snd-plat-i2s";
-			reg= <0x0 0x02034000 0x0 0xA0>;
-			resets = <&ccu RST_BUS_I2S2>;
-			clocks = <&ccu CLK_PLL_AUDIO0>, /* 98.304M / 90.3168M */
-				 <&ccu CLK_I2S2>,
-				 <&ccu CLK_BUS_I2S2>,
-				 <&ccu CLK_PLL_AUDIO0_4X>,
-				 <&ccu CLK_I2S2_ASRC>;
-			clock-names = "clk_pll_audio",
-				      "clk_i2s",
-				      "clk_bus_i2s",
-				      "clk_pll_audio_4x",
-				      "clk_i2s_asrc";
-			dmas		= <&dma 5>, <&dma 5>;
-			dma-names	= "tx", "rx";
-			playback-cma	= <128>;
-			capture-cma	= <128>;
-			tx-fifo-size	= <128>;
-			rx-fifo-size	= <128>;
-			status = "disabled";
-		};
-
-		i2s2_mach:i2s2_mach{
-			compatible = "allwinner,sunxi-snd-mach";
-			soundcard-mach,name		= "sndi2s2";
-			soundcard-mach,format		= "i2s";
-			soundcard-mach,slot-num		= <2>;
-			soundcard-mach,slot-width	= <32>;
-			status = "disabled";
-			soundcard-mach,cpu {
-				sound-dai = <&i2s2_plat>;
-			};
-			soundcard-mach,codec {
-				sound-dai = <&hdmi_codec>;
-			};
-		};
-
+		/* codec addr: 0x02030000, the others is invalid to avoid build warining */
 		codec:codec@2030000 {
 			#sound-dai-cells = <0>;
-			compatible = "allwinner,sunxi-snd-codec";
+			compatible = "allwinner,sunxi-internal-codec";
 			reg = <0x0 0x02030000 0x0 0x34c>;
 			clocks = <&ccu CLK_PLL_AUDIO0>,
 				 <&ccu CLK_PLL_AUDIO1_DIV5>,
@@ -1828,180 +1684,295 @@
 				      "audio_clk_dac", "audio_clk_adc",
 				      "audio_clk_bus";
 			resets = <&ccu RST_BUS_AUDIO_CODEC>;
-			interrupts	= <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
-			status = "disabled";
-		};
-		codec_plat:codec_plat {
-			#sound-dai-cells = <0>;
-			compatible	= "allwinner,sunxi-snd-plat-aaudio";
-			playback-cma	= <128>;
-			capture-cma	= <256>;
-			tx-fifo-size	= <128>;
-			rx-fifo-size	= <256>;
-			dac-txdata	= <0x02030020>;
-			adc-txdata	= <0x02030040>;
-			dmas		= <&dma 7>, <&dma 7>;
-			dma-names	= "tx", "rx";
-			status = "disabled";
-		};
-		codec_mach:codec_mach {
-			compatible = "allwinner,sunxi-snd-mach";
-			soundcard-mach,name = "audiocodec";
-			soundcard-mach,pin-switches = "MIC1", "MIC2","MIC3",
-						      "FMINL", "FMINR",
-						      "LINEINL", "LINEINR",
-						      "LINEOUTL", "LINEOUTR",
-						      "HPOUT", "SPK";
-			soundcard-mach,routing = "MIC1_PIN", "MIC1",
-						 "MIC2_PIN", "MIC2",
-						 "MIC3_PIN", "MIC3",
-						 "FMINL_PIN", "FMINL",
-						 "FMINR_PIN", "FMINR",
-						 "LINEINL_PIN", "LINEINL",
-						 "LINEINR_PIN", "LINEINR",
-						 "LINEOUTL", "LINEOUTL_PIN",
-						 "LINEOUTR", "LINEOUTR_PIN",
-						 "SPK", "LINEOUTL_PIN",
-						 "SPK", "LINEOUTR_PIN",
-						 "HPOUT", "HPOUTL_PIN",
-						 "HPOUT", "HPOUTR_PIN";
-			soundcard-mach,jack-support = <1>;
-			status = "disabled";
-			soundcard-mach,cpu {
-				sound-dai = <&codec_plat>;
-			};
-			soundcard-mach,codec {
-				sound-dai = <&codec>;
-			};
+			rx_sync_en  = <0x00>;
+			device_type = "codec";
+			status = "okay";
 		};
 
-		dmic_plat:dmic_plat@2031000 {
-			#sound-dai-cells = <0>;
-			compatible	 = "allwinner,sunxi-snd-plat-dmic";
-			reg		 = <0x0 0x02031000 0x0 0x50>;
-			resets		 = <&ccu RST_BUS_DMIC>;
-			clocks 		 = <&ccu CLK_PLL_AUDIO0>, /* 98.304M / 90.3168M */
-					   <&ccu CLK_DMIC>,
-					   <&ccu CLK_BUS_DMIC>;
-			clock-names	 = "pll_audio", "dmic", "dmic_bus";
-			dmas		 = <&dma 8>;
-			dma-names	 = "rx";
-			capture-cma	 = <128>;
-			rx-fifo-size	 = <128>;
-			status		 = "disabled";
-		};
-
-		dmic_mach:dmic_mach{
-			compatible = "allwinner,sunxi-snd-mach";
-			soundcard-mach,name = "snddmic";
-			soundcard-mach,capture-only;
-			status = "disabled";
-			soundcard-mach,cpu {
-				sound-dai = <&dmic_plat>;
-			};
-			soundcard-mach,codec {
-			};
-		};
-
-		owa_plat:owa_plat@2036000 {
-			#sound-dai-cells = <0>;
-			compatible	 = "allwinner,sunxi-snd-plat-owa";
-			reg		 = <0x0 0x02036000 0x0 0x58>;
-			resets		 = <&ccu RST_BUS_SPDIF>;
-			clocks 		 = <&ccu CLK_PLL_AUDIO0_4X>,	/* 90.3168M */
-					   <&ccu CLK_SPDIF_TX>,
-					   <&ccu CLK_BUS_SPDIF>,
-					   <&ccu CLK_PLL_AUDIO1>,         /* 98.304M */
-					   <&ccu CLK_PLL_AUDIO1_DIV5>,
-					   <&ccu CLK_PLL_PERIPH0>,
-					   <&ccu CLK_SPDIF_RX>;
-			clock-names 	 = "pll_audio0", "spdif", "spdif_bus",
-					   "pll_audio1", "pll_audio1_div5",
-					   "pll_periph", "spdif_rx";
-			dmas		 = <&dma 2>, <&dma 2>;
-			dma-names	 = "tx", "rx";
-			playback-cma	 = <128>;
-			capture-cma	 = <128>;
-			tx-fifo-size	 = <128>;
-			rx-fifo-size	 = <128>;
-			status		 = "disabled";
-		};
-
-		owa_mach:owa_mach {
-			compatible = "allwinner,sunxi-snd-mach";
-			soundcard-mach,name = "sndowa";
-			status = "disabled";
-			soundcard-mach,cpu {
-				sound-dai = <&owa_plat>;
-			};
-			soundcard-mach,codec {
-			};
-		};
-		/* audio new driver end */
-
-		/*NOTE:for other platform, this will be deleted when all platforms use new audio driver */
 		dummy_cpudai:dummy_cpudai@203034c {
-
+			compatible = "allwinner,sunxi-dummy-cpudai";
+			reg = <0x0 0x0203034c 0x0 0x4>;
+			tx_fifo_size    = <128>;
+			rx_fifo_size    = <256>;
+			dac_txdata      = <0x02030020>;
+			adc_txdata      = <0x02030040>;
+			playback_cma    = <128>;
+			capture_cma     = <256>;
+			device_type = "cpudai";
+			dmas = <&dma 7>, <&dma 7>;
+			dma-names = "tx", "rx";
+			status = "okay";
 		};
 
 		sndcodec:sound@2030340 {
-
+			compatible = "allwinner,sunxi-codec-machine";
+			reg = <0x0 0x02030340 0x0 0x4>;
+			interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
+			sunxi,audio-codec = <&codec>;
+			sunxi,cpudai-controller = <&dummy_cpudai>;
+			device_type = "sndcodec";
+			status = "okay";
 		};
-
-		daudio0:daudio@2032000 {
-
-		};
-
-		sounddaudio0:sounddaudio0@20320a0 {
-
-		};
-
-		daudio1:daudio@2033000 {
-
-		};
-
-		sounddaudio1:sounddaudio1@20330a0 {
-
-		};
-
-		daudio2:daudio@2034000 {
-
-		};
-
-		sounddaudio2:sounddaudio2@20340a0 {
-
-		};
-
-		hdmiaudio:hdmiaudio@20340a4 {
-
-		};
-
-		dmic:dmic@2031000{
-
-		};
-
-		dmic_codec:sound@2031050{
-
-		};
-
-		sounddmic:sounddmic@2031060 {
-
-		};
-
-		spdif:spdif@2036000 {
-
-		};
-
-		soundspdif:soundspdif@203605c {
-
-		};
-		/* to be delete */
 
 		sunxi_rpaf_dsp0:rpaf-dsp@203034c {
 			compatible = "allwinner,rpaf-dsp0";
 			device_type = "sunxi_rpaf_dsp0";
 			dsp_id = <0x0>;
 			status = "okay";
+		};
+
+		/* dmic addr: 0x02031000, the others is invalid to avoid build warining */
+		dmic:dmic@2031000{
+			#sound-dai-cells = <0>;
+			compatible = "allwinner,sunxi-dmic";
+			reg = <0x0 0x02031000 0x0 0x50>;
+			clocks = <&ccu CLK_PLL_AUDIO0>, /* 98.304M / 90.3168M */
+				 <&ccu CLK_DMIC>,
+				 <&ccu CLK_BUS_DMIC>;
+			clock-names = "pll_audio", "dmic", "dmic_bus";
+			resets = <&ccu RST_BUS_DMIC>;
+			dmas		= <&dma 8>;
+			dma-names	= "rx";
+			interrupts	= <GIC_SPI 24 IRQ_TYPE_LEVEL_HIGH>;
+			clk_parent	= <0x1>;
+			capture_cma	= <256>;
+			data_vol	= <0xB0>;
+			rx_chmap	= <0x76543210>;
+			rx_sync_en      = <0x00>;
+			device_type = "dmic";
+			status = "disabled";
+		};
+
+		dmic_codec:sound@2031050{
+			#sound-dai-cells = <0>;
+			compatible = "dmic-codec";
+			reg = <0x0 0x02031050 0x0 0x4>;
+			num-channels = <8>;
+		};
+
+		sounddmic:sounddmic@2031060 {
+			reg = <0x0 0x02031060 0x0 0x4>;
+			compatible = "sunxi,simple-audio-card";
+			simple-audio-card,name = "snddmic";
+			simple-audio-card,capture_only;
+			status = "disabled";
+			/* simple-audio-card,format = "i2s"; */
+			simple-audio-card,cpu {
+				sound-dai = <&dmic>;
+			};
+			simple-audio-card,codec {
+				sound-dai = <&dmic_codec>;
+			};
+		};
+
+		/* daudio0 addr: 0x02032000, the others is invalid to avoid build warining */
+		daudio0:daudio@2032000 {
+			#sound-dai-cells = <0>;
+			compatible = "allwinner,sunxi-daudio";
+			reg = <0x0 0x02032000 0x0 0xa0>;
+			clocks = <&ccu CLK_PLL_AUDIO0>, /* 98.304M / 90.3168M */
+				 <&ccu CLK_I2S0>,
+				 <&ccu CLK_BUS_I2S0>;
+			clock-names = "pll_audio", "i2s0", "i2s0_bus";
+			resets = <&ccu RST_BUS_I2S0>;
+			dmas		= <&dma 3>, <&dma 3>;
+			dma-names	= "tx", "rx";
+			interrupts	= <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
+			pinctrl_used		= <0x01>;
+			sign_extend		= <0x00>;
+			tx_data_mode		= <0x00>;
+			rx_data_mode		= <0x00>;
+			msb_lsb_first		= <0x00>;
+			pcm_lrck_period		= <0x80>;
+			slot_width_select	= <0x20>;
+			frametype		= <0x00>;
+			tdm_config		= <0x01>;
+			tdm_num			= <0x00>;
+			mclk_div		= <0x00>;
+			clk_parent		= <0x00>;
+			capture_cma		= <128>;
+			playback_cma		= <128>;
+			tx_num			= <4>;
+			tx_chmap1		= <0x76543210>;
+			tx_chmap0		= <0xFEDCBA98>;
+			rx_num			= <4>;
+			rx_chmap3		= <0x03020100>;
+			rx_chmap2		= <0x07060504>;
+			rx_chmap1		= <0x0B0A0908>;
+			rx_chmap0		= <0x0F0E0D0C>;
+			asrc_function_en	= <0x00>;
+			rx_sync_en              = <0x00>;
+			device_type = "daudio0";
+			status = "disabled";
+		};
+
+		sounddaudio0: sounddaudio0@20320a0 {
+			reg = <0x0 0x020320a0 0x0 0x4>;
+			compatible = "sunxi,simple-audio-card";
+			simple-audio-card,name = "snddaudio0";
+			simple-audio-card,format = "i2s";
+			status = "disabled";
+			/* simple-audio-card,frame-master = <&daudio0_master>; */
+			/* simple-audio-card,bitclock-master = <&daudio0_master>; */
+			/* simple-audio-card,bitclock-inversion; */
+			/* simple-audio-card,frame-inversion; */
+			simple-audio-card,cpu {
+				sound-dai = <&daudio0>;
+			};
+		};
+
+		/* daudio1 addr: 0x02033000, the others is invalid to avoid build warining */
+		daudio1:daudio@2033000 {
+			#sound-dai-cells = <0>;
+			compatible = "allwinner,sunxi-daudio";
+			reg = <0x0 0x02033000 0x0 0xa0>;
+			clocks = <&ccu CLK_PLL_AUDIO0>, /* 98.304M / 90.3168M */
+				 <&ccu CLK_I2S1>,
+				 <&ccu CLK_BUS_I2S1>;
+			clock-names = "pll_audio", "i2s1", "i2s1_bus";
+			resets = <&ccu RST_BUS_I2S1>;
+			dmas		= <&dma 4>, <&dma 4>;
+			dma-names	= "tx", "rx";
+			interrupts	= <GIC_SPI 27 IRQ_TYPE_LEVEL_HIGH>;
+			pinctrl_used		= <0x01>;
+			sign_extend		= <0x00>;
+			tx_data_mode		= <0x00>;
+			rx_data_mode		= <0x00>;
+			msb_lsb_first		= <0x00>;
+			pcm_lrck_period		= <0x80>;
+			slot_width_select	= <0x20>;
+			frametype		= <0x00>;
+			tdm_config		= <0x01>;
+			tdm_num			= <0x01>;
+			mclk_div		= <0x00>;
+			clk_parent		= <0x00>;
+			capture_cma		= <128>;
+			playback_cma		= <128>;
+			tx_num			= <4>;
+			tx_chmap1		= <0x76543210>;
+			tx_chmap0		= <0xFEDCBA98>;
+			rx_num			= <4>;
+			rx_chmap3		= <0x03020100>;
+			rx_chmap2		= <0x07060504>;
+			rx_chmap1		= <0x0B0A0908>;
+			rx_chmap0		= <0x0F0E0D0C>;
+			asrc_function_en	= <0x00>;
+			rx_sync_en              = <0x00>;
+			device_type = "daudio1";
+			status = "disabled";
+		};
+
+		sounddaudio1: sounddaudio1@20330a0 {
+			reg = <0x0 0x020330a0 0x0 0x4>;
+			compatible = "sunxi,simple-audio-card";
+			simple-audio-card,name = "snddaudio1";
+			simple-audio-card,format = "i2s";
+			status = "disabled";
+			simple-audio-card,cpu {
+				sound-dai = <&daudio1>;
+			};
+		};
+
+		/* daudio2 addr: 0x02034000, the others is invalid to avoid build warining */
+		daudio2:daudio@2034000 {
+			#sound-dai-cells = <0>;
+			compatible = "allwinner,sunxi-daudio";
+			reg = <0x0 0x02034000 0x0 0xa0>;
+			clocks = <&ccu CLK_PLL_AUDIO0>, /* 98.304M / 90.3168M */
+				 <&ccu CLK_I2S2>,
+				 <&ccu CLK_BUS_I2S2>,
+				 <&ccu CLK_PLL_AUDIO0_4X>,
+				 <&ccu CLK_I2S2_ASRC>;
+			resets = <&ccu RST_BUS_I2S2>;
+			dmas		= <&dma 5>, <&dma 5>;
+			dma-names	= "tx", "rx";
+			interrupts	= <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
+			pinctrl_used		= <0x01>;
+			daudio_type		= <0x00>;
+			sign_extend		= <0x00>;
+			tx_data_mode		= <0x00>;
+			rx_data_mode		= <0x00>;
+			msb_lsb_first		= <0x00>;
+			pcm_lrck_period		= <0x80>;
+			slot_width_select	= <0x20>;
+			frametype		= <0x00>;
+			tdm_config		= <0x01>;
+			tdm_num			= <0x02>;
+			mclk_div		= <0x01>;
+			clk_parent		= <0x00>;
+			capture_cma		= <128>;
+			playback_cma		= <128>;
+			tx_num			= <4>;
+			tx_chmap1		= <0x76543210>;
+			tx_chmap0		= <0xFEDCBA98>;
+			rx_num			= <4>;
+			rx_chmap3		= <0x03020100>;
+			rx_chmap2		= <0x07060504>;
+			rx_chmap1		= <0x0B0A0908>;
+			rx_chmap0		= <0x0F0E0D0C>;
+			asrc_function_en	= <0x00>;
+			rx_sync_en              = <0x00>;
+			device_type = "daudio2";
+			status = "disabled";
+		};
+
+		sounddaudio2: sounddaudio2@20340a0 {
+			reg = <0x0 0x020340a0 0x0 0x4>;
+			compatible = "sunxi,simple-audio-card";
+			simple-audio-card,name = "snddaudio2";
+			simple-audio-card,format = "i2s";
+			status = "disabled";
+			simple-audio-card,cpu {
+				sound-dai = <&daudio2>;
+			};
+		};
+
+		hdmiaudio: hdmiaudio@20340a4 {
+			#sound-dai-cells = <0>;
+			reg = <0x0 0x020340a4 0x0 0x4>;
+			compatible = "allwinner,sunxi-hdmiaudio";
+			status = "disabled";
+		};
+
+		/* spdif addr: 0x02036000, the others is invalid to avoid build warining */
+		spdif:spdif@2036000 {
+			#sound-dai-cells = <0>;
+			compatible = "allwinner,sunxi-spdif";
+			reg = <0x0 0x02036000 0x0 0x58>;
+			clocks = <&ccu CLK_PLL_AUDIO0_4X>,	/* 90.3168M */
+				 <&ccu CLK_SPDIF_TX>,
+				 <&ccu CLK_BUS_SPDIF>,
+				 <&ccu CLK_PLL_AUDIO1>,         /* 98.304M */
+				 <&ccu CLK_PLL_AUDIO1_DIV5>,
+				 <&ccu CLK_PLL_PERIPH0>,
+				 <&ccu CLK_SPDIF_RX>;
+			clock-names = "pll_audio0", "spdif", "spdif_bus",
+				      "pll_audio1", "pll_audio1_div5",
+				      "pll_periph", "spdif_rx";
+			resets = <&ccu RST_BUS_SPDIF>;
+			dmas		= <&dma 2>, <&dma 2>;
+			dma-names	= "tx", "rx";
+			interrupts	= <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
+			clk_parent	= <0x1>;
+			playback_cma	= <128>;
+			capture_cma	= <128>;
+			rx_sync_en      = <0>;
+			device_type = "spdif";
+			status = "disabled";
+		};
+
+		soundspdif:soundspdif@203605c {
+			reg = <0x0 0x0203605c 0x0 0x4>;
+			compatible = "sunxi,simple-audio-card";
+			simple-audio-card,name = "sndspdif";
+			status = "disabled";
+			 /* simple-audio-card,format = "i2s"; */
+			 simple-audio-card,cpu {
+				 sound-dai = <&spdif>;
+			 };
+			 simple-audio-card,codec {
+				 /*snd-soc-dummy*/
+			 };
 		};
 
 		ths: ths@02009400 {
