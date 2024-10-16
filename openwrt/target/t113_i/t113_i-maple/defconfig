@@ -37,12 +37,19 @@ CONFIG_EXTERNAL_CPIO=""
 # Root filesystem archives
 #
 # CONFIG_TARGET_ROOTFS_CPIOGZ is not set
-# CONFIG_TARGET_ROOTFS_TARGZ is not set
+CONFIG_TARGET_ROOTFS_TARGZ=y
 
 #
 # Root filesystem images
 #
-# CONFIG_TARGET_ROOTFS_EXT4FS is not set
+CONFIG_TARGET_ROOTFS_EXT4FS=y
+CONFIG_TARGET_EXT4_MAXINODE=6000
+CONFIG_TARGET_EXT4_RESERVED_PCT=0
+CONFIG_TARGET_EXT4_BLOCKSIZE_4K=y
+# CONFIG_TARGET_EXT4_BLOCKSIZE_2K is not set
+# CONFIG_TARGET_EXT4_BLOCKSIZE_1K is not set
+CONFIG_TARGET_EXT4_BLOCKSIZE=4096
+# CONFIG_TARGET_EXT4_JOURNAL is not set
 CONFIG_TARGET_ROOTFS_SQUASHFS=y
 CONFIG_KERNEL_SQUASHFS_XZ=y
 # CONFIG_KERNEL_SQUASHFS_ZLIB is not set
@@ -50,6 +57,7 @@ CONFIG_KERNEL_SQUASHFS_XZ=y
 CONFIG_TARGET_SQUASHFS_BLOCK_SIZE=256
 CONFIG_TARGET_UBIFS_FREE_SPACE_FIXUP=y
 CONFIG_TARGET_UBIFS_JOURNAL_SIZE=""
+CONFIG_TARGET_IMAGES_GZIP=y
 
 #
 # Image Options
@@ -67,9 +75,11 @@ CONFIG_SUNXI_RECOVERY_INITRAMFS_KERNEL_FORMAT_BOOTIMG=y
 # CONFIG_SUNXI_SEPARATE_DATA_FROM_ROOTFS is not set
 # CONFIG_CUSTOMIZE_IMAGE_NAME is not set
 # CONFIG_CUSTOMIZE_CONFIG_FILE is not set
+# CONFIG_TARGET_ROOTFS_INCLUDE_KERNEL is not set
 CONFIG_TARGET_ROOTFS_INCLUDE_UIMAGE=y
 CONFIG_TARGET_ROOTFS_INCLUDE_ZIMAGE=y
 CONFIG_TARGET_ROOTFS_INCLUDE_FIT=y
+# CONFIG_TARGET_ROOTFS_INCLUDE_DTB is not set
 
 #
 # Kernel Image Compression Mode setting
@@ -96,6 +106,7 @@ CONFIG_REDUCE_ROOTFS_SIZE=y
 CONFIG_SUNXI_MAKE_REDUNDANT_ENV=y
 CONFIG_SUNXI_REDUNDANT_ENV_SIZE="0x20000"
 # CONFIG_SUNXI_NO_ROOTFS_IMG is not set
+CONFIG_TARGET_ROOTFS_PARTSIZE=104
 # end of Target Images
 
 # CONFIG_EXPERIMENTAL is not set
@@ -2335,7 +2346,7 @@ CONFIG_BUSYBOX_CONFIG_LOGGER=y
 
 # CONFIG_PACKAGE_busybox-selinux is not set
 CONFIG_PACKAGE_ca-bundle=y
-# CONFIG_PACKAGE_ca-certificates is not set
+CONFIG_PACKAGE_ca-certificates=y
 CONFIG_PACKAGE_dnsmasq=y
 # CONFIG_PACKAGE_dnsmasq-dhcpv6 is not set
 # CONFIG_PACKAGE_dnsmasq-full is not set
@@ -2350,7 +2361,15 @@ CONFIG_PACKAGE_fwtool=y
 # CONFIG_PACKAGE_getrandom is not set
 CONFIG_PACKAGE_jsonfilter=y
 # CONFIG_PACKAGE_libasan is not set
-# CONFIG_PACKAGE_libatomic is not set
+CONFIG_PACKAGE_libatomic=y
+
+#
+# Configuration
+#
+CONFIG_LIBATOMIC_ROOT_DIR="$(LICHEE_TOP_DIR)/prebuilt/rootfsbuilt/arm/toolchain-sunxi-glibc-gcc-830/toolchain"
+CONFIG_LIBATOMIC_FILE_SPEC="./lib/libatomic.so.*"
+# end of Configuration
+
 CONFIG_PACKAGE_libc=y
 
 #
@@ -2509,9 +2528,17 @@ CONFIG_ZABBIX_POSTGRESQL=y
 #
 # Audio
 #
-# CONFIG_PACKAGE_aactd is not set
-# CONFIG_PACKAGE_aactd-lib is not set
-# CONFIG_PACKAGE_alsa-plugins-aw is not set
+CONFIG_PACKAGE_aactd=y
+CONFIG_PACKAGE_aactd-lib=y
+CONFIG_PACKAGE_alsa-plugins-aw=y
+
+#
+# Customize plugins
+#
+CONFIG_ALSA_PLUGINS_AW_AWRATE=y
+CONFIG_ALSA_PLUGINS_AW_AWEQUAL=y
+# end of Customize plugins
+
 # CONFIG_PACKAGE_audio-process is not set
 # CONFIG_PACKAGE_audio-process-common-lib is not set
 # CONFIG_PACKAGE_audio-process-post-lib is not set
@@ -2542,7 +2569,7 @@ CONFIG_BOOT_PLAY_COMPLETE_MUSIC=y
 # CONFIG_BOOT_PLAY_COMPLETE_TIMEOUT is not set
 # end of Configuration
 
-# CONFIG_PACKAGE_g2d-sample is not set
+CONFIG_PACKAGE_g2d-sample=y
 CONFIG_PACKAGE_libuapi=y
 # CONFIG_SUNXI_DISPLAY_ONE is not set
 CONFIG_SUNXI_DISPLAY_TWO=y
@@ -2599,7 +2626,7 @@ CONFIG_CEDAR_VDECODER_WMV3=y
 #
 # OMX interface support ---
 #
-# CONFIG_OMX is not set
+CONFIG_OMX=y
 # end of Select cedarc configuration options
 
 # CONFIG_PACKAGE_libcedare is not set
@@ -2687,26 +2714,26 @@ CONFIG_CEDAR_PARSER_PLS=y
 CONFIG_CEDAR_STREAM_ALL=y
 CONFIG_CEDAR_FILE_STREAM=y
 CONFIG_CEDAR_HTTP_STREAM=y
-# CONFIG_SSL_ENABLE is not set
-# CONFIG_CEDAR_RTSP_STREAM is not set
+CONFIG_SSL_ENABLE=y
+CONFIG_CEDAR_RTSP_STREAM=y
 
 #
 # options for DEBUG ---
 #
-# CONFIG_VDEC_SAVE_YUV is not set
+CONFIG_VDEC_SAVE_YUV=y
 
 #
 # cedarx demo support---
 #
-# CONFIG_CEDAR_MUXER_DEMO is not set
-# CONFIG_CEDAR_PARSER_DEMO is not set
-# CONFIG_CEDAR_VDEC_DEMO is not set
-# CONFIG_CEDAR_VENC_DEMO is not set
-# CONFIG_CEDAR_XPLAYER_DEMO is not set
-# CONFIG_CEDAR_XMETA_DEMO is not set
-# CONFIG_CEDAR_JPEG_DEMO is not set
-# CONFIG_CEDAR_RECODER_DEMO is not set
-# CONFIG_CEDAR_OMX_DEMO is not set
+CONFIG_CEDAR_MUXER_DEMO=y
+CONFIG_CEDAR_PARSER_DEMO=y
+CONFIG_CEDAR_VDEC_DEMO=y
+CONFIG_CEDAR_VENC_DEMO=y
+CONFIG_CEDAR_XPLAYER_DEMO=y
+CONFIG_CEDAR_XMETA_DEMO=y
+CONFIG_CEDAR_JPEG_DEMO=y
+CONFIG_CEDAR_RECODER_DEMO=y
+CONFIG_CEDAR_OMX_DEMO=y
 # end of Select cedarx configuration options
 
 #
@@ -2743,9 +2770,9 @@ CONFIG_CEDARX_NO_USE_PLAYREADY=y
 # CONFIG_PACKAGE_moduledemo is not set
 # CONFIG_PACKAGE_tmetadataretrieverdemo is not set
 # CONFIG_PACKAGE_tplayercastdemo is not set
-CONFIG_PACKAGE_tplayerdemo=y
-CONFIG_PACKAGE_trecorderdemo=y
-CONFIG_PACKAGE_vencoderDemo=y
+# CONFIG_PACKAGE_tplayerdemo is not set
+# CONFIG_PACKAGE_trecorderdemo is not set
+# CONFIG_PACKAGE_vencoderDemo is not set
 # CONFIG_PACKAGE_xplayerdemo is not set
 # end of Multimedia
 
@@ -3089,14 +3116,14 @@ CONFIG_PACKAGE_directfb-examples=y
 #
 # CONFIG_PACKAGE_lv_86_boxes is not set
 # CONFIG_PACKAGE_lv_examples is not set
-CONFIG_LVGL8_USE_SUNXIFB_DOUBLE_BUFFER=y
-CONFIG_LVGL8_USE_SUNXIFB_CACHE=y
-CONFIG_LVGL8_USE_SUNXIFB_G2D=y
-CONFIG_LVGL8_USE_SUNXIFB_G2D_ROTATE=y
+# CONFIG_LVGL8_USE_SUNXIFB_DOUBLE_BUFFER is not set
+# CONFIG_LVGL8_USE_SUNXIFB_CACHE is not set
+# CONFIG_LVGL8_USE_SUNXIFB_G2D is not set
+# CONFIG_LVGL8_USE_SUNXIFB_G2D_ROTATE is not set
 # CONFIG_LVGL8_USE_FREETYPE is not set
 # CONFIG_LVGL8_USE_SUNXIFB_DIRECT_MODE is not set
 # CONFIG_PACKAGE_lv_g2d_test is not set
-CONFIG_PACKAGE_lv_monitor=y
+# CONFIG_PACKAGE_lv_monitor is not set
 # end of Littlevgl
 
 #
@@ -3977,11 +4004,11 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 #
 # Python
 #
-# CONFIG_PACKAGE_libpython3 is not set
+CONFIG_PACKAGE_libpython3=y
 # CONFIG_PACKAGE_micropython is not set
 # CONFIG_PACKAGE_micropython-lib is not set
 # CONFIG_PACKAGE_python-pip-conf is not set
-# CONFIG_PACKAGE_python3 is not set
+CONFIG_PACKAGE_python3=y
 # CONFIG_PACKAGE_python3-Cython is not set
 # CONFIG_PACKAGE_python3-aiohttp is not set
 # CONFIG_PACKAGE_python3-aiohttp-cors is not set
@@ -3992,14 +4019,16 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-asn1crypto is not set
 # CONFIG_PACKAGE_python3-astral is not set
 # CONFIG_PACKAGE_python3-async-timeout is not set
-# CONFIG_PACKAGE_python3-asyncio is not set
+CONFIG_PACKAGE_python3-asyncio=y
+# CONFIG_PACKAGE_python3-asyncio-src is not set
 # CONFIG_PACKAGE_python3-atomicwrites is not set
 # CONFIG_PACKAGE_python3-attrs is not set
 # CONFIG_PACKAGE_python3-augeas is not set
 # CONFIG_PACKAGE_python3-automat is not set
 # CONFIG_PACKAGE_python3-awscli is not set
 # CONFIG_PACKAGE_python3-babel is not set
-# CONFIG_PACKAGE_python3-base is not set
+CONFIG_PACKAGE_python3-base=y
+# CONFIG_PACKAGE_python3-base-src is not set
 # CONFIG_PACKAGE_python3-bcrypt is not set
 # CONFIG_PACKAGE_python3-bidict is not set
 # CONFIG_PACKAGE_python3-boto3 is not set
@@ -4010,13 +4039,16 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-cachetools is not set
 # CONFIG_PACKAGE_python3-certifi is not set
 # CONFIG_PACKAGE_python3-cffi is not set
-# CONFIG_PACKAGE_python3-cgi is not set
-# CONFIG_PACKAGE_python3-cgitb is not set
+CONFIG_PACKAGE_python3-cgi=y
+# CONFIG_PACKAGE_python3-cgi-src is not set
+CONFIG_PACKAGE_python3-cgitb=y
+# CONFIG_PACKAGE_python3-cgitb-src is not set
 # CONFIG_PACKAGE_python3-chardet is not set
 # CONFIG_PACKAGE_python3-ciso8601 is not set
 # CONFIG_PACKAGE_python3-click is not set
 # CONFIG_PACKAGE_python3-click-log is not set
-# CONFIG_PACKAGE_python3-codecs is not set
+CONFIG_PACKAGE_python3-codecs=y
+# CONFIG_PACKAGE_python3-codecs-src is not set
 # CONFIG_PACKAGE_python3-colorama is not set
 # CONFIG_PACKAGE_python3-constantly is not set
 # CONFIG_PACKAGE_python3-contextlib2 is not set
@@ -4024,17 +4056,21 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-cryptodome is not set
 # CONFIG_PACKAGE_python3-cryptodomex is not set
 # CONFIG_PACKAGE_python3-cryptography is not set
-# CONFIG_PACKAGE_python3-ctypes is not set
+CONFIG_PACKAGE_python3-ctypes=y
+# CONFIG_PACKAGE_python3-ctypes-src is not set
 # CONFIG_PACKAGE_python3-curl is not set
 # CONFIG_PACKAGE_python3-dateutil is not set
-# CONFIG_PACKAGE_python3-dbm is not set
-# CONFIG_PACKAGE_python3-decimal is not set
+CONFIG_PACKAGE_python3-dbm=y
+# CONFIG_PACKAGE_python3-dbm-src is not set
+CONFIG_PACKAGE_python3-decimal=y
+# CONFIG_PACKAGE_python3-decimal-src is not set
 # CONFIG_PACKAGE_python3-decorator is not set
 # CONFIG_PACKAGE_python3-defusedxml is not set
 # CONFIG_PACKAGE_python3-dev is not set
 # CONFIG_PACKAGE_python3-distlib is not set
 # CONFIG_PACKAGE_python3-distro is not set
-# CONFIG_PACKAGE_python3-distutils is not set
+CONFIG_PACKAGE_python3-distutils=y
+# CONFIG_PACKAGE_python3-distutils-src is not set
 # CONFIG_PACKAGE_python3-django is not set
 # CONFIG_PACKAGE_python3-django-appconf is not set
 # CONFIG_PACKAGE_python3-django-compressor is not set
@@ -4059,7 +4095,8 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-docutils is not set
 # CONFIG_PACKAGE_python3-dotenv is not set
 # CONFIG_PACKAGE_python3-drf-nested-routers is not set
-# CONFIG_PACKAGE_python3-email is not set
+CONFIG_PACKAGE_python3-email=y
+# CONFIG_PACKAGE_python3-email-src is not set
 # CONFIG_PACKAGE_python3-empy is not set
 # CONFIG_PACKAGE_python3-engineio is not set
 # CONFIG_PACKAGE_python3-et_xmlfile is not set
@@ -4075,7 +4112,8 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-flask-session is not set
 # CONFIG_PACKAGE_python3-flask-socketio is not set
 # CONFIG_PACKAGE_python3-flup is not set
-# CONFIG_PACKAGE_python3-gdbm is not set
+CONFIG_PACKAGE_python3-gdbm=y
+# CONFIG_PACKAGE_python3-gdbm-src is not set
 # CONFIG_PACKAGE_python3-gmpy2 is not set
 # CONFIG_PACKAGE_python3-gnupg is not set
 # CONFIG_PACKAGE_python3-greenlet is not set
@@ -4097,7 +4135,7 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-libmodbus is not set
 # CONFIG_PACKAGE_python3-libselinux is not set
 # CONFIG_PACKAGE_python3-libsemanage is not set
-# CONFIG_PACKAGE_python3-light is not set
+CONFIG_PACKAGE_python3-light=y
 
 #
 # Configuration
@@ -4105,17 +4143,22 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PYTHON3_HOST_PIP_CACHE_WORLD_READABLE is not set
 # end of Configuration
 
-# CONFIG_PACKAGE_python3-logging is not set
+# CONFIG_PACKAGE_python3-light-src is not set
+CONFIG_PACKAGE_python3-logging=y
+# CONFIG_PACKAGE_python3-logging-src is not set
 # CONFIG_PACKAGE_python3-lxml is not set
-# CONFIG_PACKAGE_python3-lzma is not set
+CONFIG_PACKAGE_python3-lzma=y
+# CONFIG_PACKAGE_python3-lzma-src is not set
 # CONFIG_PACKAGE_python3-markdown is not set
 # CONFIG_PACKAGE_python3-markupsafe is not set
 # CONFIG_PACKAGE_python3-maxminddb is not set
 # CONFIG_PACKAGE_python3-more-itertools is not set
 # CONFIG_PACKAGE_python3-msgpack is not set
 # CONFIG_PACKAGE_python3-multidict is not set
-# CONFIG_PACKAGE_python3-multiprocessing is not set
-# CONFIG_PACKAGE_python3-ncurses is not set
+CONFIG_PACKAGE_python3-multiprocessing=y
+# CONFIG_PACKAGE_python3-multiprocessing-src is not set
+CONFIG_PACKAGE_python3-ncurses=y
+# CONFIG_PACKAGE_python3-ncurses-src is not set
 # CONFIG_PACKAGE_python3-netdisco is not set
 # CONFIG_PACKAGE_python3-netifaces is not set
 # CONFIG_PACKAGE_python3-networkx is not set
@@ -4123,7 +4166,8 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-numpy is not set
 # CONFIG_PACKAGE_python3-oauthlib is not set
 # CONFIG_PACKAGE_python3-openpyxl is not set
-# CONFIG_PACKAGE_python3-openssl is not set
+CONFIG_PACKAGE_python3-openssl=y
+# CONFIG_PACKAGE_python3-openssl-src is not set
 # CONFIG_PACKAGE_python3-osrf_pycommon is not set
 # CONFIG_PACKAGE_python3-packages is not set
 # CONFIG_PACKAGE_python3-packaging is not set
@@ -4133,7 +4177,8 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-passlib is not set
 # CONFIG_PACKAGE_python3-pillow is not set
 # CONFIG_PACKAGE_python3-pip is not set
-# CONFIG_PACKAGE_python3-pkg-resources is not set
+CONFIG_PACKAGE_python3-pkg-resources=y
+# CONFIG_PACKAGE_python3-pkg-resources-src is not set
 # CONFIG_PACKAGE_python3-pluggy is not set
 # CONFIG_PACKAGE_python3-ply is not set
 # CONFIG_PACKAGE_python3-psutil is not set
@@ -4143,7 +4188,8 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-pyasn1-modules is not set
 # CONFIG_PACKAGE_python3-pybind11 is not set
 # CONFIG_PACKAGE_python3-pycparser is not set
-# CONFIG_PACKAGE_python3-pydoc is not set
+CONFIG_PACKAGE_python3-pydoc=y
+# CONFIG_PACKAGE_python3-pydoc-src is not set
 # CONFIG_PACKAGE_python3-pyinotify is not set
 # CONFIG_PACKAGE_python3-pyjwt is not set
 # CONFIG_PACKAGE_python3-pymysql is not set
@@ -4165,7 +4211,8 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-pytz is not set
 # CONFIG_PACKAGE_python3-qrcode is not set
 # CONFIG_PACKAGE_python3-rcssmin is not set
-# CONFIG_PACKAGE_python3-readline is not set
+CONFIG_PACKAGE_python3-readline=y
+# CONFIG_PACKAGE_python3-readline-src is not set
 # CONFIG_PACKAGE_python3-requests is not set
 # CONFIG_PACKAGE_python3-requests-oauthlib is not set
 # CONFIG_PACKAGE_python3-rsa is not set
@@ -4180,15 +4227,17 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-sepolgen is not set
 # CONFIG_PACKAGE_python3-sepolicy is not set
 # CONFIG_PACKAGE_python3-service-identity is not set
-# CONFIG_PACKAGE_python3-setuptools is not set
+CONFIG_PACKAGE_python3-setuptools=y
 # CONFIG_PACKAGE_python3-setuptools-scm is not set
+# CONFIG_PACKAGE_python3-setuptools-src is not set
 # CONFIG_PACKAGE_python3-simplejson is not set
 # CONFIG_PACKAGE_python3-six is not set
 # CONFIG_PACKAGE_python3-slugify is not set
 # CONFIG_PACKAGE_python3-socketio is not set
 # CONFIG_PACKAGE_python3-speedtest-cli is not set
 # CONFIG_PACKAGE_python3-sqlalchemy is not set
-# CONFIG_PACKAGE_python3-sqlite3 is not set
+CONFIG_PACKAGE_python3-sqlite3=y
+# CONFIG_PACKAGE_python3-sqlite3-src is not set
 # CONFIG_PACKAGE_python3-sqlparse is not set
 # CONFIG_PACKAGE_python3-stem is not set
 # CONFIG_PACKAGE_python3-sysrepo is not set
@@ -4202,10 +4251,13 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-ubus is not set
 # CONFIG_PACKAGE_python3-uci is not set
 # CONFIG_PACKAGE_python3-unidecode is not set
-# CONFIG_PACKAGE_python3-unittest is not set
-# CONFIG_PACKAGE_python3-urllib is not set
+CONFIG_PACKAGE_python3-unittest=y
+# CONFIG_PACKAGE_python3-unittest-src is not set
+CONFIG_PACKAGE_python3-urllib=y
+# CONFIG_PACKAGE_python3-urllib-src is not set
 # CONFIG_PACKAGE_python3-urllib3 is not set
-# CONFIG_PACKAGE_python3-uuid is not set
+CONFIG_PACKAGE_python3-uuid=y
+# CONFIG_PACKAGE_python3-uuid-src is not set
 # CONFIG_PACKAGE_python3-vobject is not set
 # CONFIG_PACKAGE_python3-voluptuous is not set
 # CONFIG_PACKAGE_python3-voluptuous-serialize is not set
@@ -4213,7 +4265,8 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 # CONFIG_PACKAGE_python3-websocket-client is not set
 # CONFIG_PACKAGE_python3-websockets is not set
 # CONFIG_PACKAGE_python3-werkzeug is not set
-# CONFIG_PACKAGE_python3-xml is not set
+CONFIG_PACKAGE_python3-xml=y
+# CONFIG_PACKAGE_python3-xml-src is not set
 # CONFIG_PACKAGE_python3-xmltodict is not set
 # CONFIG_PACKAGE_python3-yaml is not set
 # CONFIG_PACKAGE_python3-yarl is not set
@@ -4246,9 +4299,9 @@ CONFIG_GOLANG_BUILD_CACHE_DIR=""
 #
 # Compression
 #
-# CONFIG_PACKAGE_libbz2 is not set
+CONFIG_PACKAGE_libbz2=y
 # CONFIG_PACKAGE_liblz4 is not set
-# CONFIG_PACKAGE_liblzma is not set
+CONFIG_PACKAGE_liblzma=y
 # CONFIG_PACKAGE_libunrar is not set
 # CONFIG_PACKAGE_libzip-gnutls is not set
 # CONFIG_PACKAGE_libzip-mbedtls is not set
@@ -4722,8 +4775,8 @@ CONFIG_PACKAGE_libxtables=y
 #
 # Languages
 #
-# CONFIG_PACKAGE_libyaml is not set
-# CONFIG_PACKAGE_yaml-cpp is not set
+CONFIG_PACKAGE_libyaml=y
+CONFIG_PACKAGE_yaml-cpp=y
 # end of Languages
 
 #
@@ -4769,7 +4822,24 @@ CONFIG_PACKAGE_libxtables=y
 #
 # SSL
 #
-# CONFIG_PACKAGE_libgnutls is not set
+CONFIG_PACKAGE_libgnutls=y
+
+#
+# Configuration
+#
+CONFIG_GNUTLS_DTLS_SRTP=y
+CONFIG_GNUTLS_ALPN=y
+CONFIG_GNUTLS_OCSP=y
+# CONFIG_GNUTLS_CRYPTODEV is not set
+CONFIG_GNUTLS_HEARTBEAT=y
+# CONFIG_GNUTLS_SRP is not set
+CONFIG_GNUTLS_PSK=y
+CONFIG_GNUTLS_ANON=y
+# CONFIG_GNUTLS_TPM is not set
+# CONFIG_GNUTLS_PKCS11 is not set
+# CONFIG_GNUTLS_EXT_LIBTASN1 is not set
+# end of Configuration
+
 # CONFIG_PACKAGE_libmbedtls is not set
 # CONFIG_PACKAGE_libnss is not set
 CONFIG_PACKAGE_libopenssl=y
@@ -4826,19 +4896,31 @@ CONFIG_OPENSSL_WITH_PSK=y
 # Sound
 #
 # CONFIG_PACKAGE_alsa-ucm-conf is not set
-# CONFIG_PACKAGE_liblo is not set
+CONFIG_PACKAGE_liblo=y
 # end of Sound
 
 #
 # database
 #
-# CONFIG_PACKAGE_libsqlite3 is not set
+CONFIG_PACKAGE_libsqlite3=y
+
+#
+# Configuration
+#
+CONFIG_SQLITE3_DYNAMIC_EXTENSIONS=y
+CONFIG_SQLITE3_FTS3=y
+CONFIG_SQLITE3_FTS4=y
+CONFIG_SQLITE3_FTS5=y
+CONFIG_SQLITE3_JSON1=y
+CONFIG_SQLITE3_RTREE=y
+# CONFIG_SQLITE3_SESSION is not set
+# end of Configuration
 # end of database
 
 #
 # gnome
 #
-# CONFIG_PACKAGE_libsoup is not set
+CONFIG_PACKAGE_libsoup=y
 # end of gnome
 
 #
@@ -4860,11 +4942,11 @@ CONFIG_PACKAGE_alsa-lib=y
 #
 # CONFIG_ALSA_LIB_EXTRA_resmgr is not set
 # CONFIG_ALSA_LIB_EXTRA_aload is not set
-CONFIG_ALSA_LIB_EXTRA_mixer=y
+# CONFIG_ALSA_LIB_EXTRA_mixer is not set
 CONFIG_ALSA_LIB_EXTRA_pcm=y
 # CONFIG_ALSA_LIB_EXTRA_rawmidi is not set
 # CONFIG_ALSA_LIB_EXTRA_hwdep is not set
-# CONFIG_ALSA_LIB_EXTRA_seq is not set
+CONFIG_ALSA_LIB_EXTRA_seq=y
 # CONFIG_ALSA_LIB_EXTRA_ucm is not set
 # CONFIG_ALSA_LIB_EXTRA_topology is not set
 # CONFIG_ALSA_LIB_EXTRA_alisp is not set
@@ -4887,7 +4969,7 @@ CONFIG_PACKAGE_bluez-libs=y
 # CONFIG_PACKAGE_eigen is not set
 CONFIG_PACKAGE_ell=y
 # CONFIG_PACKAGE_getdns is not set
-# CONFIG_PACKAGE_giflib is not set
+CONFIG_PACKAGE_giflib=y
 CONFIG_PACKAGE_glib2=y
 # CONFIG_PACKAGE_google-authenticator-libpam is not set
 # CONFIG_PACKAGE_hidapi is not set
@@ -4922,7 +5004,7 @@ CONFIG_PACKAGE_glib2=y
 CONFIG_PACKAGE_libblkid=y
 CONFIG_PACKAGE_libblobmsg-json=y
 # CONFIG_PACKAGE_libbpf is not set
-# CONFIG_PACKAGE_libbsd is not set
+CONFIG_PACKAGE_libbsd=y
 # CONFIG_PACKAGE_libcairo is not set
 # CONFIG_PACKAGE_libcap is not set
 # CONFIG_PACKAGE_libcap-ng is not set
@@ -4939,7 +5021,7 @@ CONFIG_PACKAGE_libcomerr=y
 # CONFIG_PACKAGE_libdaemon is not set
 # CONFIG_PACKAGE_libdaq is not set
 # CONFIG_PACKAGE_libdaq3 is not set
-# CONFIG_PACKAGE_libdb47 is not set
+CONFIG_PACKAGE_libdb47=y
 # CONFIG_PACKAGE_libdb47xx is not set
 # CONFIG_PACKAGE_libdbi is not set
 CONFIG_PACKAGE_libdbus=y
@@ -4950,10 +5032,10 @@ CONFIG_PACKAGE_libdbus=y
 # CONFIG_PACKAGE_libdnet is not set
 # CONFIG_PACKAGE_libdrm is not set
 # CONFIG_PACKAGE_libdvbcsa is not set
-# CONFIG_PACKAGE_libdw is not set
+CONFIG_PACKAGE_libdw=y
 # CONFIG_PACKAGE_libecdsautil is not set
 # CONFIG_PACKAGE_libedit is not set
-# CONFIG_PACKAGE_libelf is not set
+CONFIG_PACKAGE_libelf=y
 # CONFIG_PACKAGE_libesmtp is not set
 # CONFIG_PACKAGE_libestr is not set
 # CONFIG_PACKAGE_libev is not set
@@ -4963,7 +5045,7 @@ CONFIG_PACKAGE_libdbus=y
 # CONFIG_PACKAGE_libevent2-extra is not set
 # CONFIG_PACKAGE_libevent2-openssl is not set
 # CONFIG_PACKAGE_libevent2-pthreads is not set
-# CONFIG_PACKAGE_libexif is not set
+CONFIG_PACKAGE_libexif=y
 CONFIG_PACKAGE_libexpat=y
 # CONFIG_PACKAGE_libexslt is not set
 CONFIG_PACKAGE_libext2fs=y
@@ -4976,7 +5058,7 @@ CONFIG_PACKAGE_libext2fs=y
 # CONFIG_PACKAGE_libfdt is not set
 CONFIG_PACKAGE_libffi=y
 # CONFIG_PACKAGE_libfido2 is not set
-# CONFIG_PACKAGE_libflac is not set
+CONFIG_PACKAGE_libflac=y
 # CONFIG_PACKAGE_libfmt is not set
 CONFIG_PACKAGE_libfreetype=y
 # CONFIG_PACKAGE_libfstrm is not set
@@ -4986,9 +5068,9 @@ CONFIG_PACKAGE_libfreetype=y
 # CONFIG_PACKAGE_libgcrypt is not set
 # CONFIG_PACKAGE_libgd is not set
 # CONFIG_PACKAGE_libgd-full is not set
-# CONFIG_PACKAGE_libgdbm is not set
+CONFIG_PACKAGE_libgdbm=y
 # CONFIG_PACKAGE_libgee is not set
-# CONFIG_PACKAGE_libgmp is not set
+CONFIG_PACKAGE_libgmp=y
 # CONFIG_PACKAGE_libgpg-error is not set
 # CONFIG_PACKAGE_libgpgme is not set
 # CONFIG_PACKAGE_libgpgmepp is not set
@@ -5026,7 +5108,7 @@ CONFIG_PACKAGE_libjson-c=y
 # CONFIG_PACKAGE_libleptonica is not set
 # CONFIG_PACKAGE_libloragw is not set
 # CONFIG_PACKAGE_libltdl is not set
-# CONFIG_PACKAGE_liblua is not set
+CONFIG_PACKAGE_liblua=y
 # CONFIG_PACKAGE_liblua5.3 is not set
 CONFIG_PACKAGE_liblzo=y
 CONFIG_PACKAGE_libmad=y
@@ -5034,7 +5116,7 @@ CONFIG_PACKAGE_libmad=y
 # CONFIG_PACKAGE_libmaxminddb is not set
 # CONFIG_PACKAGE_libmbim is not set
 # CONFIG_PACKAGE_libmcrypt is not set
-# CONFIG_PACKAGE_libmicrohttpd-no-ssl is not set
+CONFIG_PACKAGE_libmicrohttpd-no-ssl=y
 # CONFIG_PACKAGE_libmicrohttpd-ssl is not set
 # CONFIG_PACKAGE_libmilter-sendmail is not set
 # CONFIG_PACKAGE_libminiupnpc is not set
@@ -5046,7 +5128,7 @@ CONFIG_PACKAGE_libmad=y
 # CONFIG_PACKAGE_libmosquitto-ssl is not set
 # CONFIG_PACKAGE_libmount is not set
 # CONFIG_PACKAGE_libmpdclient is not set
-# CONFIG_PACKAGE_libmpeg2 is not set
+CONFIG_PACKAGE_libmpeg2=y
 # CONFIG_PACKAGE_libmpg123 is not set
 # CONFIG_PACKAGE_libnatpmp is not set
 CONFIG_PACKAGE_libncurses=y
@@ -5061,7 +5143,14 @@ CONFIG_PACKAGE_libncurses=y
 # CONFIG_PACKAGE_libnetfilter-log is not set
 # CONFIG_PACKAGE_libnetfilter-queue is not set
 # CONFIG_PACKAGE_libnetsnmp is not set
-# CONFIG_PACKAGE_libnettle is not set
+CONFIG_PACKAGE_libnettle=y
+
+#
+# Configuration
+#
+# CONFIG_LIBNETTLE_MINI is not set
+# end of Configuration
+
 # CONFIG_PACKAGE_libnewt is not set
 # CONFIG_PACKAGE_libnfnetlink is not set
 # CONFIG_PACKAGE_libnftnl is not set
@@ -5075,15 +5164,15 @@ CONFIG_PACKAGE_libnl-tiny=y
 # CONFIG_PACKAGE_libnopoll is not set
 # CONFIG_PACKAGE_libnpth is not set
 # CONFIG_PACKAGE_libnpupnp is not set
-# CONFIG_PACKAGE_libogg is not set
-# CONFIG_PACKAGE_liboil is not set
+CONFIG_PACKAGE_libogg=y
+CONFIG_PACKAGE_liboil=y
 # CONFIG_PACKAGE_libopcodes is not set
 # CONFIG_PACKAGE_libopendkim is not set
 # CONFIG_PACKAGE_libopenobex is not set
 # CONFIG_PACKAGE_libopensc is not set
 # CONFIG_PACKAGE_libopenzwave is not set
 # CONFIG_PACKAGE_liboping is not set
-# CONFIG_PACKAGE_libopus is not set
+CONFIG_PACKAGE_libopus=y
 # CONFIG_PACKAGE_libopusenc is not set
 # CONFIG_PACKAGE_libopusfile is not set
 # CONFIG_PACKAGE_liborcania is not set
@@ -5118,7 +5207,7 @@ CONFIG_PACKAGE_libpcap=y
 # CONFIG_PACKAGE_libpkgconf is not set
 CONFIG_PACKAGE_libpng=y
 # CONFIG_PACKAGE_libpopt is not set
-# CONFIG_PACKAGE_libprotobuf-c is not set
+CONFIG_PACKAGE_libprotobuf-c=y
 # CONFIG_PACKAGE_libpsl is not set
 # CONFIG_PACKAGE_libqmi is not set
 # CONFIG_PACKAGE_libqrencode is not set
@@ -5187,7 +5276,7 @@ CONFIG_PACKAGE_libss=y
 # CONFIG_PACKAGE_libsysrepo is not set
 # CONFIG_PACKAGE_libtalloc is not set
 # CONFIG_PACKAGE_libtasn1 is not set
-# CONFIG_PACKAGE_libtheora is not set
+CONFIG_PACKAGE_libtheora=y
 # CONFIG_PACKAGE_libtiff is not set
 # CONFIG_PACKAGE_libtiffxx is not set
 # CONFIG_PACKAGE_libtins is not set
@@ -5218,10 +5307,10 @@ CONFIG_PACKAGE_libuci=y
 CONFIG_PACKAGE_libuuid=y
 # CONFIG_PACKAGE_libuv is not set
 # CONFIG_PACKAGE_libuwifi is not set
-# CONFIG_PACKAGE_libv4l is not set
-# CONFIG_PACKAGE_libvorbis is not set
+CONFIG_PACKAGE_libv4l=y
+CONFIG_PACKAGE_libvorbis=y
 # CONFIG_PACKAGE_libvorbisidec is not set
-# CONFIG_PACKAGE_libvpx is not set
+CONFIG_PACKAGE_libvpx=y
 # CONFIG_PACKAGE_libwebp is not set
 # CONFIG_PACKAGE_libwebsockets-full is not set
 # CONFIG_PACKAGE_libwebsockets-mbedtls is not set
@@ -5231,14 +5320,14 @@ CONFIG_PACKAGE_libuuid=y
 # CONFIG_PACKAGE_libxerces-c is not set
 # CONFIG_PACKAGE_libxerces-c-samples is not set
 # CONFIG_PACKAGE_libxkbcommon is not set
-# CONFIG_PACKAGE_libxml2 is not set
+CONFIG_PACKAGE_libxml2=y
 # CONFIG_PACKAGE_libxslt is not set
 # CONFIG_PACKAGE_libyaml-cpp is not set
 # CONFIG_PACKAGE_libyang is not set
 # CONFIG_PACKAGE_libyang-cpp is not set
 # CONFIG_PACKAGE_libyubikey is not set
 # CONFIG_PACKAGE_libzmq-curve is not set
-# CONFIG_PACKAGE_libzmq-nc is not set
+CONFIG_PACKAGE_libzmq-nc=y
 # CONFIG_PACKAGE_linux-atm is not set
 # CONFIG_PACKAGE_lmdb is not set
 # CONFIG_PACKAGE_log4cplus is not set
@@ -5298,7 +5387,7 @@ CONFIG_TSLIB_ENABLE_variance=y
 # CONFIG_TSLIB_ENABLE_tools is not set
 # CONFIG_PACKAGE_uclibcxx is not set
 # CONFIG_PACKAGE_uw-imap is not set
-# CONFIG_PACKAGE_x264 is not set
+CONFIG_PACKAGE_x264=y
 # CONFIG_PACKAGE_xkeyboard-config is not set
 # CONFIG_PACKAGE_xmlrpc-c is not set
 # CONFIG_PACKAGE_xmlrpc-c-client is not set
@@ -5364,15 +5453,274 @@ CONFIG_POSTFIX_PCRE=y
 #
 # GStreamer
 #
-# CONFIG_PACKAGE_gst-omx is not set
-# CONFIG_PACKAGE_gst1-libav is not set
-# CONFIG_PACKAGE_gstreamer1-libs is not set
-# CONFIG_PACKAGE_gstreamer1-plugins-aw is not set
+CONFIG_PACKAGE_gst-omx=y
+CONFIG_PACKAGE_gst1-libav=y
+
+#
+# Select GStreamer libav configuration options
+#
+CONFIG_GST1_LIBAV_IPV6=y
+CONFIG_GST1_LIBAV_PATENTED=y
+CONFIG_GET_LIBAV_COMMON_AV_SUPPORT=y
+
+#
+# Encoders ---
+#
+CONFIG_GST1_LIBAV_ENCODER_ac3=y
+CONFIG_GST1_LIBAV_ENCODER_jpegls=y
+CONFIG_GST1_LIBAV_ENCODER_mpeg1video=y
+CONFIG_GST1_LIBAV_ENCODER_mpeg2video=y
+CONFIG_GST1_LIBAV_ENCODER_mpeg4=y
+CONFIG_GST1_LIBAV_ENCODER_pcm_s16be=y
+CONFIG_GST1_LIBAV_ENCODER_pcm_s16le=y
+CONFIG_GST1_LIBAV_ENCODER_png=y
+CONFIG_GST1_LIBAV_ENCODER_vorbis=y
+CONFIG_GST1_LIBAV_ENCODER_zlib=y
+
+#
+# Decoders ---
+#
+CONFIG_GST1_LIBAV_DECODER_aac=y
+CONFIG_GST1_LIBAV_DECODER_ac3=y
+CONFIG_GST1_LIBAV_DECODER_atrac3=y
+CONFIG_GST1_LIBAV_DECODER_gif=y
+CONFIG_GST1_LIBAV_DECODER_h264=y
+CONFIG_GST1_LIBAV_DECODER_jpegls=y
+CONFIG_GST1_LIBAV_DECODER_mp2=y
+CONFIG_GST1_LIBAV_DECODER_mp3=y
+CONFIG_GST1_LIBAV_DECODER_mpegvideo=y
+CONFIG_GST1_LIBAV_DECODER_mpeg1video=y
+CONFIG_GST1_LIBAV_DECODER_mpeg2video=y
+CONFIG_GST1_LIBAV_DECODER_mpeg4=y
+CONFIG_GST1_LIBAV_DECODER_mpeg4aac=y
+CONFIG_GST1_LIBAV_DECODER_pcm_s16be=y
+CONFIG_GST1_LIBAV_DECODER_pcm_s16le=y
+CONFIG_GST1_LIBAV_DECODER_png=y
+CONFIG_GST1_LIBAV_DECODER_vorbis=y
+CONFIG_GST1_LIBAV_DECODER_wmav1=y
+CONFIG_GST1_LIBAV_DECODER_wmav2=y
+CONFIG_GST1_LIBAV_DECODER_zlib=y
+
+#
+# Muxers ---
+#
+CONFIG_GST1_LIBAV_MUXER_ac3=y
+CONFIG_GST1_LIBAV_MUXER_ffm=y
+CONFIG_GST1_LIBAV_MUXER_h264=y
+CONFIG_GST1_LIBAV_MUXER_mp3=y
+CONFIG_GST1_LIBAV_MUXER_mp4=y
+CONFIG_GST1_LIBAV_MUXER_mpeg1video=y
+CONFIG_GST1_LIBAV_MUXER_mpeg2video=y
+CONFIG_GST1_LIBAV_MUXER_mpegts=y
+CONFIG_GST1_LIBAV_MUXER_ogg=y
+CONFIG_GST1_LIBAV_MUXER_oss=y
+CONFIG_GST1_LIBAV_MUXER_rtp=y
+
+#
+# Demuxers ---
+#
+CONFIG_GST1_LIBAV_DEMUXER_ac3=y
+CONFIG_GST1_LIBAV_DEMUXER_ffm=y
+CONFIG_GST1_LIBAV_DEMUXER_h264=y
+CONFIG_GST1_LIBAV_DEMUXER_mp3=y
+CONFIG_GST1_LIBAV_DEMUXER_mpegvideo=y
+CONFIG_GST1_LIBAV_DEMUXER_mpegps=y
+CONFIG_GST1_LIBAV_DEMUXER_mpegts=y
+CONFIG_GST1_LIBAV_DEMUXER_ogg=y
+CONFIG_GST1_LIBAV_DEMUXER_rm=y
+CONFIG_GST1_LIBAV_DEMUXER_rtsp=y
+CONFIG_GST1_LIBAV_DEMUXER_sdp=y
+
+#
+# Parsers ---
+#
+CONFIG_GST1_LIBAV_PARSER_aac=y
+CONFIG_GST1_LIBAV_PARSER_ac3=y
+CONFIG_GST1_LIBAV_PARSER_h264=y
+CONFIG_GST1_LIBAV_PARSER_mpegaudio=y
+CONFIG_GST1_LIBAV_PARSER_mpegvideo=y
+CONFIG_GST1_LIBAV_PARSER_mpeg4video=y
+
+#
+# Protocols ---
+#
+CONFIG_GST1_LIBAV_PROTOCOL_file=y
+CONFIG_GST1_LIBAV_PROTOCOL_http=y
+CONFIG_GST1_LIBAV_PROTOCOL_pipe=y
+CONFIG_GST1_LIBAV_PROTOCOL_rtp=y
+CONFIG_GST1_LIBAV_PROTOCOL_tcp=y
+CONFIG_GST1_LIBAV_PROTOCOL_udp=y
+# end of Select GStreamer libav configuration options
+
+CONFIG_PACKAGE_gst1-mod-alaw=y
+CONFIG_PACKAGE_gst1-mod-alpha=y
+CONFIG_PACKAGE_gst1-mod-alphacolor=y
+CONFIG_PACKAGE_gst1-mod-alsa=y
+CONFIG_PACKAGE_gst1-mod-apetag=y
+CONFIG_PACKAGE_gst1-mod-app=y
+CONFIG_PACKAGE_gst1-mod-asf=y
+CONFIG_PACKAGE_gst1-mod-audioconvert=y
+CONFIG_PACKAGE_gst1-mod-audiofx=y
+CONFIG_PACKAGE_gst1-mod-audioparsers=y
+CONFIG_PACKAGE_gst1-mod-audiorate=y
+CONFIG_PACKAGE_gst1-mod-audioresample=y
+CONFIG_PACKAGE_gst1-mod-audiotestsrc=y
+CONFIG_PACKAGE_gst1-mod-auparse=y
+CONFIG_PACKAGE_gst1-mod-autodetect=y
+CONFIG_PACKAGE_gst1-mod-avi=y
+CONFIG_PACKAGE_gst1-mod-cutter=y
+CONFIG_PACKAGE_gst1-mod-debug=y
+CONFIG_PACKAGE_gst1-mod-deinterlace=y
+CONFIG_PACKAGE_gst1-mod-dtmf=y
+CONFIG_PACKAGE_gst1-mod-effectv=y
+CONFIG_PACKAGE_gst1-mod-equalizer=y
+CONFIG_PACKAGE_gst1-mod-fbdev2sink=y
+CONFIG_PACKAGE_gst1-mod-flac=y
+CONFIG_PACKAGE_gst1-mod-flv=y
+CONFIG_PACKAGE_gst1-mod-flxdec=y
+CONFIG_PACKAGE_gst1-mod-gio=y
+CONFIG_PACKAGE_gst1-mod-goom=y
+CONFIG_PACKAGE_gst1-mod-goom2k1=y
+CONFIG_PACKAGE_gst1-mod-icydemux=y
+CONFIG_PACKAGE_gst1-mod-id3demux=y
+CONFIG_PACKAGE_gst1-mod-imagefreeze=y
+CONFIG_PACKAGE_gst1-mod-interleave=y
+CONFIG_PACKAGE_gst1-mod-isomp4=y
+CONFIG_PACKAGE_gst1-mod-jpeg=y
+CONFIG_PACKAGE_gst1-mod-level=y
+CONFIG_PACKAGE_gst1-mod-matroska=y
+CONFIG_PACKAGE_gst1-mod-mpeg2dec=y
+CONFIG_PACKAGE_gst1-mod-mulaw=y
+CONFIG_PACKAGE_gst1-mod-multifile=y
+CONFIG_PACKAGE_gst1-mod-multipart=y
+CONFIG_PACKAGE_gst1-mod-navigationtest=y
+CONFIG_PACKAGE_gst1-mod-ogg=y
+CONFIG_PACKAGE_gst1-mod-opus=y
+CONFIG_PACKAGE_gst1-mod-oss4=y
+CONFIG_PACKAGE_gst1-mod-ossaudio=y
+CONFIG_PACKAGE_gst1-mod-playback=y
+CONFIG_PACKAGE_gst1-mod-png=y
+CONFIG_PACKAGE_gst1-mod-replaygain=y
+CONFIG_PACKAGE_gst1-mod-rtp=y
+CONFIG_PACKAGE_gst1-mod-rtpmanager=y
+CONFIG_PACKAGE_gst1-mod-rtsp=y
+CONFIG_PACKAGE_gst1-mod-scrcastsrc=y
+CONFIG_PACKAGE_gst1-mod-shapewipe=y
+CONFIG_PACKAGE_gst1-mod-smpte=y
+CONFIG_PACKAGE_gst1-mod-soup=y
+CONFIG_PACKAGE_gst1-mod-spectrum=y
+CONFIG_PACKAGE_gst1-mod-sunxifbsink=y
+CONFIG_PACKAGE_gst1-mod-tcp=y
+CONFIG_PACKAGE_gst1-mod-theora=y
+CONFIG_PACKAGE_gst1-mod-typefindfunctions=y
+CONFIG_PACKAGE_gst1-mod-udp=y
+CONFIG_PACKAGE_gst1-mod-video4linux2=y
+CONFIG_PACKAGE_gst1-mod-videobox=y
+CONFIG_PACKAGE_gst1-mod-videoconvert=y
+CONFIG_PACKAGE_gst1-mod-videocrop=y
+CONFIG_PACKAGE_gst1-mod-videofilter=y
+CONFIG_PACKAGE_gst1-mod-videomixer=y
+CONFIG_PACKAGE_gst1-mod-videorate=y
+CONFIG_PACKAGE_gst1-mod-videoscale=y
+CONFIG_PACKAGE_gst1-mod-videotestsrc=y
+CONFIG_PACKAGE_gst1-mod-volume=y
+CONFIG_PACKAGE_gst1-mod-vorbis=y
+CONFIG_PACKAGE_gst1-mod-vpx=y
+CONFIG_PACKAGE_gst1-mod-wavenc=y
+CONFIG_PACKAGE_gst1-mod-wavparse=y
+CONFIG_PACKAGE_gst1-mod-x264=y
+CONFIG_PACKAGE_gst1-plugins-aw=y
+CONFIG_PACKAGE_gst1-plugins-base=y
+CONFIG_PACKAGE_gst1-plugins-good=y
+CONFIG_PACKAGE_gst1-plugins-ugly=y
+CONFIG_PACKAGE_gstreamer1=y
+CONFIG_PACKAGE_gstreamer1-libs=y
+
+#
+# Select GStreamer libraries
+#
+CONFIG_gstreamer1-all=y
+
+#
+# Libraries
+#
+CONFIG_PACKAGE_libgstreamer1=y
+CONFIG_PACKAGE_libgst1check=y
+CONFIG_PACKAGE_libgst1controller=y
+CONFIG_PACKAGE_libgst1net=y
+# end of Select GStreamer libraries
+
+CONFIG_PACKAGE_gstreamer1-plugins-aw=y
+
+#
+# Select GStreamer aw modules
+#
+CONFIG_gst1-plugins-aw-all=y
+
+#
+# Modules
+#
+CONFIG_G2D_ROTATE=y
+
+#
+# Libraries
+#
+CONFIG_PACKAGE_libgst1framebuffersink=y
+# end of Select GStreamer aw modules
+
 # CONFIG_PACKAGE_gstreamer1-plugins-bad is not set
-# CONFIG_PACKAGE_gstreamer1-plugins-base is not set
-# CONFIG_PACKAGE_gstreamer1-plugins-good is not set
-# CONFIG_PACKAGE_gstreamer1-plugins-ugly is not set
-# CONFIG_PACKAGE_gstreamer1-utils is not set
+CONFIG_PACKAGE_gstreamer1-plugins-base=y
+
+#
+# Select GStreamer base modules and libraries
+#
+CONFIG_gst1-plugins-base-all=y
+
+#
+# Modules
+#
+
+#
+# Libraries
+#
+CONFIG_PACKAGE_libgst1allocators=y
+CONFIG_PACKAGE_libgst1app=y
+CONFIG_PACKAGE_libgst1audio=y
+CONFIG_PACKAGE_libgst1fft=y
+CONFIG_PACKAGE_libgst1pbutils=y
+CONFIG_PACKAGE_libgst1riff=y
+CONFIG_PACKAGE_libgst1rtp=y
+CONFIG_PACKAGE_libgst1rtsp=y
+CONFIG_PACKAGE_libgst1sdp=y
+CONFIG_PACKAGE_libgst1tag=y
+CONFIG_PACKAGE_libgst1video=y
+# end of Select GStreamer base modules and libraries
+
+CONFIG_PACKAGE_gstreamer1-plugins-good=y
+
+#
+# Select GStreamer good modules
+#
+CONFIG_gst1-plugins-good-all=y
+
+#
+# Modules
+#
+# end of Select GStreamer good modules
+
+CONFIG_PACKAGE_gstreamer1-plugins-ugly=y
+
+#
+# Select GStreamer ugly modules
+#
+CONFIG_gst1-plugins-ugly-all=y
+
+#
+# Modules
+#
+# end of Select GStreamer ugly modules
+
+CONFIG_PACKAGE_gstreamer1-utils=y
 # end of GStreamer
 
 #
@@ -5390,11 +5738,31 @@ CONFIG_PACKAGE_bluez-alsa=y
 # CONFIG_PACKAGE_icecast is not set
 # CONFIG_PACKAGE_imagemagick is not set
 # CONFIG_PACKAGE_lcdgrilo is not set
-# CONFIG_PACKAGE_live is not set
+CONFIG_PACKAGE_live=y
 # CONFIG_PACKAGE_minisatip is not set
-# CONFIG_PACKAGE_mjpg-streamer is not set
-# CONFIG_PACKAGE_motion is not set
-# CONFIG_PACKAGE_tvheadend is not set
+CONFIG_PACKAGE_mjpg-streamer=y
+# CONFIG_MJPG_STREAMER_V4L2 is not set
+CONFIG_PACKAGE_mjpg-streamer-input-file=y
+CONFIG_PACKAGE_mjpg-streamer-input-http=y
+CONFIG_PACKAGE_mjpg-streamer-input-uvc=y
+CONFIG_PACKAGE_mjpg-streamer-output-file=y
+CONFIG_PACKAGE_mjpg-streamer-output-http=y
+CONFIG_PACKAGE_mjpg-streamer-output-rtsp=y
+CONFIG_PACKAGE_mjpg-streamer-output-zmq=y
+# CONFIG_PACKAGE_mjpg-streamer-www is not set
+CONFIG_PACKAGE_mjpg-streamer-www-simple=y
+CONFIG_PACKAGE_motion=y
+CONFIG_PACKAGE_tvheadend=y
+
+#
+# Configuration
+#
+CONFIG_TVHEADEND_CWC_SUPPORT=y
+CONFIG_TVHEADEND_LINUXDVB_SUPPORT=y
+CONFIG_TVHEADEND_DVBSCAN_SUPPORT=y
+# CONFIG_TVHEADEND_AVAHI_SUPPORT is not set
+# end of Configuration
+
 # CONFIG_PACKAGE_v4l2rtspserver is not set
 # CONFIG_PACKAGE_vips is not set
 # CONFIG_PACKAGE_wds is not set
