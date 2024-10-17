@@ -32,6 +32,13 @@
 		regulator-always-on;
 	};
 
+        rtc: ds1302 {
+                compatible = "maxim,ds1302";
+                gpio-ce = <&pio 1 4 GPIO_ACTIVE_HIGH>;
+                gpio-io = <&pio 1 3 GPIO_ACTIVE_HIGH>;
+                gpio-sclk = <&pio 1 2 GPIO_ACTIVE_HIGH>;
+        };
+
         leds {
                 compatible = "gpio-leds";
 
