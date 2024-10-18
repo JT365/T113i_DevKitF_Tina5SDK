@@ -22,7 +22,7 @@
 #include <linux/bcd.h>
 
 #define DRV_NAME	"rtc-ds1302"
-#define DRV_VERSION	"0.1.2"
+#define DRV_VERSION	"0.1.3"
 
 #define	RTC_CMD_READ	0x81		/* Read command */
 #define	RTC_CMD_WRITE	0x80		/* Write command */
@@ -242,6 +242,51 @@ static int ds1302_rtc_set_time(struct device *dev, struct rtc_time *tm)
 	return 0;
 }
 
+static ssize_t tcr_show(struct device* dev, struct device_attribute *attr, char *buf) 
+{
+	unsigned int tcr;
+
+	tcr = ds1302_readbyte(RTC_ADDR_TCR);
+	return sprintf(buf, "trickle charge register content: 0x%x\n", tcr);
+}
+
+static ssize_t tcr_store(struct device* dev, struct device_attribute *attr, const char *buf, size_t count) 
+{
+	unsigned int tcr=0;
+
+	sscanf(buf, "%x", &tcr);
+	ds1302_writebyte(RTC_ADDR_TCR, tcr);
+	return count;
+}
+
+static struct device_attribute tcr_attribute = {
+	.attr = {
+		.name = "trickle_charge",
+		.mode = S_IWUSR | S_IRUGO,
+	},
+	.show = tcr_show,
+	.store = tcr_store,
+};
+
+static int ds1302_sysfs_create(struct platform_device *pdev, const struct attribute * attr)
+{
+	int ret;
+
+	ret = sysfs_create_file(&pdev->dev.kobj, attr);
+	return ret;
+}
+
+static void ds1302_sysfs_remove(struct platform_device *pdev, const struct attribute * attr)
+{
+	sysfs_remove_file(&pdev->dev.kobj, attr);
+}
+
+static int ds1302_rtc_remove(struct platform_device *pdev)
+{
+	ds1302_sysfs_remove(pdev, &tcr_attribute.attr);
+	return 0;
+}
+
 static int ds1302_rtc_ioctl(struct device *dev, unsigned int cmd,
 			    unsigned long arg)
 {
@@ -343,6 +388,10 @@ static int __init ds1302_rtc_probe(struct platform_device *pdev)
 	}
 
 	platform_set_drvdata(pdev, rtc);
+	if (ds1302_sysfs_create(pdev, &tcr_attribute.attr)) {
+		dev_err(&pdev->dev, "Failed to register sysfs node");
+		return -ENODEV;
+	}
 
 	return 0;
 
@@ -361,6 +410,7 @@ static struct platform_driver ds1302_platform_driver = {
 		.of_match_table = ds1302_dt_ids,
 	},
 	.probe		= ds1302_rtc_probe,
+	.remove		= ds1302_rtc_remove,
 };
 
 static int __init ds1302_rtc_init(void)
