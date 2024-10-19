@@ -458,6 +458,18 @@
 		function = "gpio_in";
 	};
 
+        pwm4_pin_a: pwm4@0 {
+                pins = "PE10";
+                function = "pwm4";
+                drive-strength = <10>;
+                bias-pull-up;
+        };
+
+        pwm4_pin_b: pwm4@1 {
+                pins = "PE10";
+                function = "gpio_in";
+        };
+
 	pwm7_pin_a: pwm7@0 {
 		pins = "PD22";
 		function = "pwm7";
@@ -1134,49 +1146,45 @@ pull up or pull down(default 0), driver level(default 1), data>
 &lcd0 {
 	/* part 1 */
 	lcd_used            = <1>;
-	lcd_driver_name     = "st7701_86";
-	lcd_backlight	    = <255>;
+	lcd_driver_name     = "default_lcd";
+	lcd_backlight	    = <50>;
 
 	/* part 2 */
 	lcd_if = <0>;
-	lcd_hv_if = <0>;
 	
 	/* part 3 */
 	lcd_x               = <480>;
-	lcd_y               = <480>;
-	lcd_width           = <71>;
-	lcd_height          = <71>;
-	lcd_dclk_freq       = <16>;
+	lcd_y               = <854>;
+	lcd_width           = <62>;
+	lcd_height          = <110>;
+	lcd_dclk_freq       = <27>;
 
-	lcd_hbp             = <20>;
-	lcd_ht              = <526>;
-	lcd_hspw            = <6>;
+	lcd_hbp             = <45>;
+	lcd_ht              = <531>;
+	lcd_hspw            = <2>;
 
-	lcd_vbp             = <10>;
-	lcd_vt              = <510>;
-	lcd_vspw            = <4>;
+	lcd_vbp             = <52>;
+	lcd_vt              = <900>;
+	lcd_vspw            = <10>;
 		
 	lcd_pwm_used        = <1>;
-	lcd_pwm_ch          = <7>;
-	lcd_pwm_freq        = <5000>;
-	lcd_pwm_pol         = <0>;
+	lcd_pwm_ch          = <4>;
+	lcd_pwm_freq        = <40000>;
+	lcd_pwm_pol         = <1>;
+	lcd_pwm_max_limit   = <255>;
 
 	/* part 5 */
-	lcd_frm = <1>;
-	lcd_io_phase = <0x0000>;
-	lcd_gamma_en = <0>;
-	lcd_cmap_en = <0>;
-	lcd_hv_clk_phase = <0>;
-	lcd_hv_sync_polarity= <0>;
-
-	// reset
-	lcd_gpio_0 = <&pio PB 4 GPIO_ACTIVE_HIGH>;
-	// cs
-	lcd_gpio_1 = <&pio PB 7 GPIO_ACTIVE_HIGH>;
-	// sda
-	lcd_gpio_2 = <&pio PB 5 GPIO_ACTIVE_HIGH>;
-	// sck
-	lcd_gpio_3 = <&pio PB 6 GPIO_ACTIVE_HIGH>;
+	lcd_lvds_if         = <0>;
+	lcd_lvds_colordepth = <1>;
+	lcd_lvds_mode       = <0>;
+	lcd_frm             = <1>;
+	lcd_io_phase        = <0x0000>;
+	lcd_gamma_en        = <0>;
+	lcd_cmap_en         = <0>;
+	
+	deu_mode            = <0>;
+	lcdgamma4iep        = <22>;
+	smart_color         = <90>;
 
 	/* part 6 */
 	lcd_power = "vcc-lcd";
@@ -1480,6 +1488,13 @@ tvd_row*tvd_column is the total tvd channel number to be used in multichannel mo
 	pinctrl-0 = <&pwm3_pin_a>;
 	pinctrl-1 = <&pwm3_pin_b>;
 	status = "okay";
+};
+
+&pwm4 {
+        pinctrl-names = "active", "sleep";
+        pinctrl-0 = <&pwm4_pin_a>;
+        pinctrl-1 = <&pwm4_pin_b>;
+        status = "okay";
 };
 
 &pwm7 {
