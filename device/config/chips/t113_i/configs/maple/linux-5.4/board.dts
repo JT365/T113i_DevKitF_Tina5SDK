@@ -759,7 +759,7 @@
 &s_cir0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&s_cir0_pins_a>;
-	status = "okay";
+	status = "disabled";
 };
 
 &ir1 {
@@ -1151,20 +1151,21 @@ pull up or pull down(default 0), driver level(default 1), data>
 
 	/* part 2 */
 	lcd_if = <0>;
+	lcd_hv_if = <0>;
 	
 	/* part 3 */
 	lcd_x               = <480>;
 	lcd_y               = <854>;
 	lcd_width           = <62>;
 	lcd_height          = <110>;
-	lcd_dclk_freq       = <27>;
+	lcd_dclk_freq       = <24>;
 
 	lcd_hbp             = <45>;
-	lcd_ht              = <531>;
+	lcd_ht              = <533>;
 	lcd_hspw            = <2>;
 
 	lcd_vbp             = <52>;
-	lcd_vt              = <900>;
+	lcd_vt              = <910>;
 	lcd_vspw            = <10>;
 		
 	lcd_pwm_used        = <1>;
@@ -1174,21 +1175,19 @@ pull up or pull down(default 0), driver level(default 1), data>
 	lcd_pwm_max_limit   = <255>;
 
 	/* part 5 */
-	lcd_lvds_if         = <0>;
-	lcd_lvds_colordepth = <1>;
-	lcd_lvds_mode       = <0>;
 	lcd_frm             = <1>;
 	lcd_io_phase        = <0x0000>;
 	lcd_gamma_en        = <0>;
 	lcd_cmap_en         = <0>;
-	
+	lcd_hv_clk_phase    = <1>;
+	lcd_hv_sync_polarity = <0>;
 	deu_mode            = <0>;
 	lcdgamma4iep        = <22>;
 	smart_color         = <90>;
 
 	/* part 6 */
-	lcd_power = "vcc-lcd";
-	lcd_pin_power = "vcc-pd";
+/*	lcd_power = "vcc-lcd";*/
+/*	lcd_pin_power = "vcc-pd";*/
 	pinctrl-0 = <&rgb18_pins_a>;
 	pinctrl-1 = <&rgb18_pins_b>;
 };
