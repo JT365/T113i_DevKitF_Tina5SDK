@@ -2725,14 +2725,14 @@ CONFIG_VDEC_SAVE_YUV=y
 #
 # cedarx demo support---
 #
-CONFIG_CEDAR_MUXER_DEMO=y
-CONFIG_CEDAR_PARSER_DEMO=y
-CONFIG_CEDAR_VDEC_DEMO=y
-CONFIG_CEDAR_VENC_DEMO=y
-CONFIG_CEDAR_XPLAYER_DEMO=y
-CONFIG_CEDAR_XMETA_DEMO=y
-CONFIG_CEDAR_JPEG_DEMO=y
-CONFIG_CEDAR_RECODER_DEMO=y
+# CONFIG_CEDAR_MUXER_DEMO is not set
+# CONFIG_CEDAR_PARSER_DEMO is not set
+# CONFIG_CEDAR_VDEC_DEMO is not set
+# CONFIG_CEDAR_VENC_DEMO is not set
+# CONFIG_CEDAR_XPLAYER_DEMO is not set
+# CONFIG_CEDAR_XMETA_DEMO is not set
+# CONFIG_CEDAR_JPEG_DEMO is not set
+# CONFIG_CEDAR_RECODER_DEMO is not set
 CONFIG_CEDAR_OMX_DEMO=y
 # end of Select cedarx configuration options
 
@@ -2826,12 +2826,11 @@ CONFIG_PACKAGE_rpmsg_test=y
 #
 # USB
 #
-CONFIG_PACKAGE_MtpDaemon=y
-CONFIG_MTP_USE_AIO=y
-CONFIG_PACKAGE_adbd=y
+# CONFIG_PACKAGE_MtpDaemon is not set
+# CONFIG_PACKAGE_adbd is not set
 # CONFIG_PACKAGE_adbd_auth_service is not set
 # CONFIG_PACKAGE_libawadbauth is not set
-CONFIG_PACKAGE_setusbconfig=y
+# CONFIG_PACKAGE_setusbconfig is not set
 # end of USB
 
 #
@@ -2844,48 +2843,13 @@ CONFIG_PACKAGE_setusbconfig=y
 #
 # Wireless
 #
-CONFIG_PACKAGE_btmanager-v4.0=y
-CONFIG_BTMG_ENABLE_DEMO=y
-# CONFIG_BTMG_ENABLE_MESH is not set
+# CONFIG_PACKAGE_btmanager-v4.0 is not set
 CONFIG_BTMG_ENABLE_TTYS1=y
 # CONFIG_BTMG_ENABLE_TTYAS1 is not set
 # CONFIG_BTMG_ENABLE_TTYS2 is not set
 # CONFIG_BTMG_ENABLE_TTYAS2 is not set
-CONFIG_PACKAGE_wifimanager-v2.0=y
-
-#
-# Wifimanager-v2.0 Configuration
-#
-CONFIG_WMG_PROTOCOL_SOFTAP=y
-# CONFIG_WMG_PROTOCOL_BLE is not set
-# CONFIG_WMG_PROTOCOL_XCONFIG is not set
-# CONFIG_WMG_PROTOCOL_SOUNDWAVE is not set
-CONFIG_WMG_PLATFORM_LINUX=y
-# CONFIG_WMG_PLATFORM_FREERTOS is not set
-# CONFIG_WMG_PLATFORM_XRLINK is not set
-CONFIG_WMG_UNREGISTER_CB=y
-# CONFIG_WMG_SUPPORT_EXPAND is not set
-
-#
-# Wifimanager support mode Configuration
-#
-CONFIG_WMG_SUPPORT_STA_MODE=y
-CONFIG_WMG_SUPPORT_AP_MODE=y
-# CONFIG_WMG_SUPPORT_MONITOR_MODE is not set
-# CONFIG_WMG_SUPPORT_P2P_MODE is not set
-# end of Wifimanager support mode Configuration
-
-# CONFIG_WMG_DEFAULT_DEBUG_LV_ERROR is not set
-# CONFIG_WMG_DEFAULT_DEBUG_LV_WARN is not set
-CONFIG_WMG_DEFAULT_DEBUG_LV_INFO=y
-# CONFIG_WMG_DEFAULT_DEBUG_LV_DEBUG is not set
-# CONFIG_WMG_DEFAULT_DEBUG_LV_DUMP is not set
-# CONFIG_WMG_DEFAULT_DEBUG_LV_EXCE is not set
-# end of Wifimanager-v2.0 Configuration
-
-CONFIG_PACKAGE_wifimanager-v2.0-lib=y
-CONFIG_PACKAGE_wifimanager-v2.0-demo=y
-CONFIG_PACKAGE_wirelesscommon=y
+# CONFIG_PACKAGE_wifimanager-v2.0 is not set
+# CONFIG_PACKAGE_wirelesscommon is not set
 # end of Wireless
 # end of Allwinner
 
@@ -4942,13 +4906,13 @@ CONFIG_PACKAGE_alsa-lib=y
 #
 # CONFIG_ALSA_LIB_EXTRA_resmgr is not set
 # CONFIG_ALSA_LIB_EXTRA_aload is not set
-# CONFIG_ALSA_LIB_EXTRA_mixer is not set
+CONFIG_ALSA_LIB_EXTRA_mixer=y
 CONFIG_ALSA_LIB_EXTRA_pcm=y
-# CONFIG_ALSA_LIB_EXTRA_rawmidi is not set
-# CONFIG_ALSA_LIB_EXTRA_hwdep is not set
+CONFIG_ALSA_LIB_EXTRA_rawmidi=y
+CONFIG_ALSA_LIB_EXTRA_hwdep=y
 CONFIG_ALSA_LIB_EXTRA_seq=y
-# CONFIG_ALSA_LIB_EXTRA_ucm is not set
-# CONFIG_ALSA_LIB_EXTRA_topology is not set
+CONFIG_ALSA_LIB_EXTRA_ucm=y
+CONFIG_ALSA_LIB_EXTRA_topology=y
 # CONFIG_ALSA_LIB_EXTRA_alisp is not set
 # end of Configuration
 
@@ -5752,17 +5716,7 @@ CONFIG_PACKAGE_mjpg-streamer-output-zmq=y
 # CONFIG_PACKAGE_mjpg-streamer-www is not set
 CONFIG_PACKAGE_mjpg-streamer-www-simple=y
 CONFIG_PACKAGE_motion=y
-CONFIG_PACKAGE_tvheadend=y
-
-#
-# Configuration
-#
-CONFIG_TVHEADEND_CWC_SUPPORT=y
-CONFIG_TVHEADEND_LINUXDVB_SUPPORT=y
-CONFIG_TVHEADEND_DVBSCAN_SUPPORT=y
-# CONFIG_TVHEADEND_AVAHI_SUPPORT is not set
-# end of Configuration
-
+# CONFIG_PACKAGE_tvheadend is not set
 # CONFIG_PACKAGE_v4l2rtspserver is not set
 # CONFIG_PACKAGE_vips is not set
 # CONFIG_PACKAGE_wds is not set
