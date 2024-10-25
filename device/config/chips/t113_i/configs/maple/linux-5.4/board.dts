@@ -1050,6 +1050,8 @@ chn_cfg_mode     : Hardware DE channel allocation config. 0:single display with 
 	def_output_dev           = <0>;
 	hdmi_mode_check          = <1>;
 
+	disp_rotation_used       = <1>;
+	degree0                  = <0>;
 	fb0_format               = <0>;
 	fb0_width                = <0>;
 	fb0_height               = <0>;
