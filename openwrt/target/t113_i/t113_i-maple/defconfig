@@ -1965,9 +1965,18 @@ CONFIG_BUSYBOX_CONFIG_FEATURE_DMESG_PRETTY=y
 # CONFIG_BUSYBOX_CONFIG_EJECT is not set
 # CONFIG_BUSYBOX_CONFIG_FALLOCATE is not set
 # CONFIG_BUSYBOX_CONFIG_FATATTR is not set
-# CONFIG_BUSYBOX_CONFIG_FBSET is not set
+CONFIG_BUSYBOX_CONFIG_FBSET=y
+CONFIG_BUSYBOX_CONFIG_FEATURE_FBSET_FANCY=y
+CONFIG_BUSYBOX_CONFIG_FEATURE_FBSET_READMODE=y
 # CONFIG_BUSYBOX_CONFIG_FDFORMAT is not set
-# CONFIG_BUSYBOX_CONFIG_FDISK is not set
+CONFIG_BUSYBOX_CONFIG_FDISK=y
+CONFIG_BUSYBOX_CONFIG_FEATURE_FDISK_WRITABLE=y
+# CONFIG_BUSYBOX_CONFIG_FEATURE_AIX_LABEL is not set
+# CONFIG_BUSYBOX_CONFIG_FEATURE_SGI_LABEL is not set
+# CONFIG_BUSYBOX_CONFIG_FEATURE_SUN_LABEL is not set
+# CONFIG_BUSYBOX_CONFIG_FEATURE_OSF_LABEL is not set
+# CONFIG_BUSYBOX_CONFIG_FEATURE_GPT_LABEL is not set
+# CONFIG_BUSYBOX_CONFIG_FEATURE_FDISK_ADVANCED is not set
 # CONFIG_BUSYBOX_CONFIG_FINDFS is not set
 CONFIG_BUSYBOX_CONFIG_FLOCK=y
 # CONFIG_BUSYBOX_CONFIG_FDFLUSH is not set
@@ -5525,6 +5534,9 @@ CONFIG_GST1_LIBAV_PROTOCOL_tcp=y
 CONFIG_GST1_LIBAV_PROTOCOL_udp=y
 # end of Select GStreamer libav configuration options
 
+# CONFIG_PACKAGE_gst1-mod-adpcmdec is not set
+# CONFIG_PACKAGE_gst1-mod-adpcmenc is not set
+# CONFIG_PACKAGE_gst1-mod-aiff is not set
 CONFIG_PACKAGE_gst1-mod-alaw=y
 CONFIG_PACKAGE_gst1-mod-alpha=y
 CONFIG_PACKAGE_gst1-mod-alphacolor=y
@@ -5532,6 +5544,7 @@ CONFIG_PACKAGE_gst1-mod-alsa=y
 CONFIG_PACKAGE_gst1-mod-apetag=y
 CONFIG_PACKAGE_gst1-mod-app=y
 CONFIG_PACKAGE_gst1-mod-asf=y
+# CONFIG_PACKAGE_gst1-mod-asfmux is not set
 CONFIG_PACKAGE_gst1-mod-audioconvert=y
 CONFIG_PACKAGE_gst1-mod-audiofx=y
 CONFIG_PACKAGE_gst1-mod-audioparsers=y
@@ -5539,49 +5552,77 @@ CONFIG_PACKAGE_gst1-mod-audiorate=y
 CONFIG_PACKAGE_gst1-mod-audioresample=y
 CONFIG_PACKAGE_gst1-mod-audiotestsrc=y
 CONFIG_PACKAGE_gst1-mod-auparse=y
+# CONFIG_PACKAGE_gst1-mod-autoconvert is not set
 CONFIG_PACKAGE_gst1-mod-autodetect=y
 CONFIG_PACKAGE_gst1-mod-avi=y
+# CONFIG_PACKAGE_gst1-mod-bayer is not set
+# CONFIG_PACKAGE_gst1-mod-camerabin is not set
 CONFIG_PACKAGE_gst1-mod-cutter=y
 CONFIG_PACKAGE_gst1-mod-debug=y
+# CONFIG_PACKAGE_gst1-mod-debugutilsbad is not set
 CONFIG_PACKAGE_gst1-mod-deinterlace=y
 CONFIG_PACKAGE_gst1-mod-dtmf=y
+# CONFIG_PACKAGE_gst1-mod-dvdspu is not set
 CONFIG_PACKAGE_gst1-mod-effectv=y
 CONFIG_PACKAGE_gst1-mod-equalizer=y
 CONFIG_PACKAGE_gst1-mod-fbdev2sink=y
+CONFIG_PACKAGE_gst1-mod-fbdevsink=y
+# CONFIG_PACKAGE_gst1-mod-festival is not set
 CONFIG_PACKAGE_gst1-mod-flac=y
 CONFIG_PACKAGE_gst1-mod-flv=y
 CONFIG_PACKAGE_gst1-mod-flxdec=y
+# CONFIG_PACKAGE_gst1-mod-frei0r is not set
 CONFIG_PACKAGE_gst1-mod-gio=y
 CONFIG_PACKAGE_gst1-mod-goom=y
 CONFIG_PACKAGE_gst1-mod-goom2k1=y
 CONFIG_PACKAGE_gst1-mod-icydemux=y
 CONFIG_PACKAGE_gst1-mod-id3demux=y
+# CONFIG_PACKAGE_gst1-mod-id3tag is not set
 CONFIG_PACKAGE_gst1-mod-imagefreeze=y
 CONFIG_PACKAGE_gst1-mod-interleave=y
 CONFIG_PACKAGE_gst1-mod-isomp4=y
 CONFIG_PACKAGE_gst1-mod-jpeg=y
+# CONFIG_PACKAGE_gst1-mod-jpegformat is not set
+# CONFIG_PACKAGE_gst1-mod-legacyrawparse is not set
 CONFIG_PACKAGE_gst1-mod-level=y
 CONFIG_PACKAGE_gst1-mod-matroska=y
 CONFIG_PACKAGE_gst1-mod-mpeg2dec=y
+# CONFIG_PACKAGE_gst1-mod-mpegpsdemux is not set
+# CONFIG_PACKAGE_gst1-mod-mpegpsmux is not set
+# CONFIG_PACKAGE_gst1-mod-mpegtsdemux is not set
+# CONFIG_PACKAGE_gst1-mod-mpegtsmux is not set
 CONFIG_PACKAGE_gst1-mod-mulaw=y
 CONFIG_PACKAGE_gst1-mod-multifile=y
 CONFIG_PACKAGE_gst1-mod-multipart=y
+# CONFIG_PACKAGE_gst1-mod-mxf is not set
 CONFIG_PACKAGE_gst1-mod-navigationtest=y
 CONFIG_PACKAGE_gst1-mod-ogg=y
+# CONFIG_PACKAGE_gst1-mod-openglmixers is not set
 CONFIG_PACKAGE_gst1-mod-opus=y
+# CONFIG_PACKAGE_gst1-mod-opusparse is not set
 CONFIG_PACKAGE_gst1-mod-oss4=y
 CONFIG_PACKAGE_gst1-mod-ossaudio=y
+# CONFIG_PACKAGE_gst1-mod-pcapparse is not set
 CONFIG_PACKAGE_gst1-mod-playback=y
 CONFIG_PACKAGE_gst1-mod-png=y
+# CONFIG_PACKAGE_gst1-mod-pnm is not set
 CONFIG_PACKAGE_gst1-mod-replaygain=y
+# CONFIG_PACKAGE_gst1-mod-rfbsrc is not set
 CONFIG_PACKAGE_gst1-mod-rtp=y
 CONFIG_PACKAGE_gst1-mod-rtpmanager=y
 CONFIG_PACKAGE_gst1-mod-rtsp=y
 CONFIG_PACKAGE_gst1-mod-scrcastsrc=y
+# CONFIG_PACKAGE_gst1-mod-sdpelem is not set
+# CONFIG_PACKAGE_gst1-mod-segmentclip is not set
 CONFIG_PACKAGE_gst1-mod-shapewipe=y
+# CONFIG_PACKAGE_gst1-mod-shm is not set
+# CONFIG_PACKAGE_gst1-mod-siren is not set
+# CONFIG_PACKAGE_gst1-mod-smoothstreaming is not set
 CONFIG_PACKAGE_gst1-mod-smpte=y
 CONFIG_PACKAGE_gst1-mod-soup=y
 CONFIG_PACKAGE_gst1-mod-spectrum=y
+# CONFIG_PACKAGE_gst1-mod-speed is not set
+# CONFIG_PACKAGE_gst1-mod-subenc is not set
 CONFIG_PACKAGE_gst1-mod-sunxifbsink=y
 CONFIG_PACKAGE_gst1-mod-tcp=y
 CONFIG_PACKAGE_gst1-mod-theora=y
@@ -5593,6 +5634,7 @@ CONFIG_PACKAGE_gst1-mod-videoconvert=y
 CONFIG_PACKAGE_gst1-mod-videocrop=y
 CONFIG_PACKAGE_gst1-mod-videofilter=y
 CONFIG_PACKAGE_gst1-mod-videomixer=y
+CONFIG_PACKAGE_gst1-mod-videoparsersbad=y
 CONFIG_PACKAGE_gst1-mod-videorate=y
 CONFIG_PACKAGE_gst1-mod-videoscale=y
 CONFIG_PACKAGE_gst1-mod-videotestsrc=y
@@ -5601,6 +5643,7 @@ CONFIG_PACKAGE_gst1-mod-vorbis=y
 CONFIG_PACKAGE_gst1-mod-vpx=y
 CONFIG_PACKAGE_gst1-mod-wavenc=y
 CONFIG_PACKAGE_gst1-mod-wavparse=y
+# CONFIG_PACKAGE_gst1-mod-waylandsink is not set
 CONFIG_PACKAGE_gst1-mod-x264=y
 CONFIG_PACKAGE_gst1-plugins-aw=y
 CONFIG_PACKAGE_gst1-plugins-base=y
@@ -5641,7 +5684,30 @@ CONFIG_G2D_ROTATE=y
 CONFIG_PACKAGE_libgst1framebuffersink=y
 # end of Select GStreamer aw modules
 
-# CONFIG_PACKAGE_gstreamer1-plugins-bad is not set
+CONFIG_PACKAGE_gstreamer1-plugins-bad=y
+
+#
+# Select GStreamer bad modules and libraries
+#
+# CONFIG_gst1-plugins-bad-all is not set
+
+#
+# Modules
+#
+
+#
+# Libraries
+#
+# CONFIG_PACKAGE_libgst1adaptivedemux is not set
+# CONFIG_PACKAGE_libgst1photography is not set
+# CONFIG_PACKAGE_libgst1basecamerabinsrc is not set
+# CONFIG_PACKAGE_libgst1uridownloader is not set
+# CONFIG_PACKAGE_libgst1mpegts is not set
+CONFIG_PACKAGE_libgst1codecparsers=y
+# CONFIG_PACKAGE_libgst1isoff is not set
+# CONFIG_PACKAGE_libgst1opencv is not set
+# end of Select GStreamer bad modules and libraries
+
 CONFIG_PACKAGE_gstreamer1-plugins-base=y
 
 #
