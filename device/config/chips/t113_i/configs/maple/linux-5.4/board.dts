@@ -15,6 +15,76 @@
 	model = "sun8iw20";
 	compatible = "allwinner,r528", "arm,sun8iw20p1";
 
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		/* c906 */
+		c906_ddr: c906_ddr@42300000 {
+			reg = <0x0 0x42300000 0x0 0x00600000>;
+			no-map;
+		};
+		/*
+		 * The name should be "vdev%dbuffer".
+		 * Its size should be not less than
+		 *     RPMSG_BUF_SIZE * (num of buffers in a vring) * 2
+		 *   = 512 * (num of buffers in a vring) * 2
+		 */
+		rv_vdev0buffer: vdev0buffer@42900000 {
+			compatible = "shared-dma-pool";
+			reg = <0x0 0x42900000 0x0 0x40000>;
+			no-map;
+		};
+
+		/*
+		 * The name should be "vdev%dvring%d".
+		 * The size of each should be not less than
+		 *     PAGE_ALIGN(vring_size(num, align))
+		 *   = PAGE_ALIGN(16 * num + 6 + 2 * num + (pads for align) + 6 + 8 * num)
+		 *
+		 * (Please refer to the vring layout in include/uapi/linux/virtio_ring.h)
+		 */
+		rv_vdev0vring0: vdev0vring0@42940000 {
+			reg = <0x0 0x42940000 0x0 0x2000>;
+			no-map;
+		};
+		rv_vdev0vring1: vdev0vring1@42942000 {
+			reg = <0x0 0x42942000 0x0 0x2000>;
+			no-map;
+		};
+
+		/*
+		 * The name should be "vdev%dbuffer".
+		 * Its size should be not less than
+		 *     RPMSG_BUF_SIZE * (num of buffers in a vring) * 2
+		 *   = 512 * (num of buffers in a vring) * 2
+		 */
+		vdev0buffer: vdev0buffer@42200000 {
+			compatible = "shared-dma-pool";
+			reg = <0x0 0x42200000 0x0 0x40000>;
+			no-map;
+		};
+
+		/*
+		 * The name should be "vdev%dvring%d".
+		 * The size of each should be not less than
+		 *     PAGE_ALIGN(vring_size(num, align))
+		 *   = PAGE_ALIGN(16 * num + 6 + 2 * num + (pads for align) + 6 + 8 * num)
+		 *
+		 * (Please refer to the vring layout in include/uapi/linux/virtio_ring.h)
+		 */
+		vdev0vring0: vdev0vring0@42240000 {
+			reg = <0x0 0x42240000 0x0 0x2000>;
+			no-map;
+		};
+		vdev0vring1: vdev0vring1@42242000 {
+			reg = <0x0 0x42242000 0x0 0x2000>;
+			no-map;
+		};
+
+	};
+
 	reg_vdd_cpu: vdd-cpu {
 		compatible = "regulator-fixed";
 		regulator-name = "vdd_cpu";
@@ -255,6 +325,12 @@
 		function = "gpio_in";
 	};
 
+        twi3_pins_c: twi3@2 {
+                pins = "PE8", "PE9";
+                function = "gpio_in";
+                drive-strength = <10>;
+        };
+
 	s_cir0_pins_a: s_cir0@0 {
 		pins = "PB1";
 		function = "ir";
@@ -388,23 +464,6 @@
 		function = "io_disabled";
 		drive-strength = <20>;
 		bias-disable;
-	};
-	gmac0_pins_a: gmac@0 {
-		allwinner,pins = "PE0", "PE1", "PE2", "PE3", "PE4",
-				 "PE5", "PE6", "PE7","PE8", "PE9";
-		allwinner,function = "gmac0";
-		allwinner,muxsel = <8>;
-		allwinner,drive = <1>;
-		allwinner,pull = <0>;
-	};
-
-	gmac0_pins_b: gmac@1 {
-		allwinner,pins = "PE0", "PE1", "PE2", "PE3", "PE4",
-				 "PE5", "PE6", "PE7","PE8", "PE9";
-		allwinner,function = "gpio_in";
-		allwinner,muxsel = <0>;
-		allwinner,drive = <1>;
-		allwinner,pull = <0>;
 	};
 
 	spi0_pins_a: spi0@0 {
@@ -692,8 +751,21 @@
 	clock-frequency = <400000>;
 	pinctrl-0 = <&twi3_pins_a>;
 	pinctrl-1 = <&twi3_pins_b>;
+	pinctrl-2 = <&twi3_pins_c>;
 	pinctrl-names = "default", "sleep";
 	status = "okay";
+
+	ft5426: ft5426@38 {
+		compatible = "edt,edt-ft5406","edt,edt-ft5x06";
+		reg = <0x38>;
+		pinctrl-names = "default";
+		//pinctrl-0 = <&pinctrl_tsc>;
+		interrupt-parent = <&pio>;
+		interrupts = < PE 8 IRQ_TYPE_EDGE_FALLING>;
+		reset-gpios = <&pio PE 9 GPIO_ACTIVE_LOW>;
+				
+		status = "okay";
+	};
 };
 
 &spi0 {
@@ -765,18 +837,6 @@
 &ir1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&ir1_pins_a>;
-	status = "disabled";
-};
-
-&gmac0 {
-	pinctrl-0 = <&gmac0_pins_a>;
-	pinctrl-1 = <&gmac0_pins_b>;
-	pinctrl-names = "default", "sleep";
-	phy-mode = "rmii";
-	use_ephy25m = <0>;
-	tx-delay = <3>;
-	rx-delay = <0>;
-	phy-rst = <&pio PE 10 GPIO_ACTIVE_HIGH>;
 	status = "disabled";
 };
 
@@ -1051,10 +1111,10 @@ chn_cfg_mode     : Hardware DE channel allocation config. 0:single display with 
 	hdmi_mode_check          = <1>;
 
 	disp_rotation_used       = <1>;
-	degree0                  = <0>;
+	degree0                  = <3>;
 	fb0_format               = <0>;
-	fb0_width                = <0>;
-	fb0_height               = <0>;
+	fb0_width                = <854>;
+	fb0_height               = <480>;
 
 	fb1_format               = <0>;
 	fb1_width                = <0>;

@@ -2436,7 +2436,15 @@ CONFIG_LIBSTDCPP_ROOT_DIR="$(LICHEE_TOP_DIR)/prebuilt/rootfsbuilt/arm/toolchain-
 CONFIG_LIBSTDCPP_FILE_SPEC="./lib/libstdc++.so.*"
 # end of Configuration
 
-# CONFIG_PACKAGE_libthread-db is not set
+CONFIG_PACKAGE_libthread-db=y
+
+#
+# Configuration
+#
+CONFIG_LIBTHREAD_DB_ROOT_DIR="$(LICHEE_TOP_DIR)/prebuilt/rootfsbuilt/arm/toolchain-sunxi-glibc-gcc-830/toolchain"
+CONFIG_LIBTHREAD_DB_FILE_SPEC="./lib/libthread_db{-*.so,.so.*}"
+# end of Configuration
+
 # CONFIG_PACKAGE_libtsan is not set
 # CONFIG_PACKAGE_libubsan is not set
 CONFIG_PACKAGE_logd=y
@@ -2894,7 +2902,7 @@ CONFIG_BTMG_ENABLE_TTYS1=y
 # CONFIG_PACKAGE_binutils is not set
 # CONFIG_PACKAGE_diffutils is not set
 # CONFIG_PACKAGE_gcc is not set
-# CONFIG_PACKAGE_gdb is not set
+CONFIG_PACKAGE_gdb=y
 # CONFIG_PACKAGE_gdbserver is not set
 # CONFIG_PACKAGE_gitlab-runner is not set
 # CONFIG_PACKAGE_libtool-bin is not set
@@ -5037,7 +5045,7 @@ CONFIG_PACKAGE_libext2fs=y
 # CONFIG_PACKAGE_libfaad2 is not set
 # CONFIG_PACKAGE_libfastjson is not set
 CONFIG_PACKAGE_libfdisk=y
-# CONFIG_PACKAGE_libfdt is not set
+CONFIG_PACKAGE_libfdt=y
 CONFIG_PACKAGE_libffi=y
 # CONFIG_PACKAGE_libfido2 is not set
 CONFIG_PACKAGE_libflac=y
@@ -7147,8 +7155,8 @@ CONFIG_PACKAGE_dbus=y
 # CONFIG_PACKAGE_elektra-kdb is not set
 # CONFIG_PACKAGE_evtest is not set
 # CONFIG_PACKAGE_extract is not set
-# CONFIG_PACKAGE_fbtest is not set
-# CONFIG_PACKAGE_fdt-utils is not set
+CONFIG_PACKAGE_fbtest=y
+CONFIG_PACKAGE_fdt-utils=y
 # CONFIG_PACKAGE_file is not set
 # CONFIG_PACKAGE_findutils is not set
 # CONFIG_PACKAGE_findutils-find is not set
