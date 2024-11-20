@@ -137,7 +137,7 @@
 		pins = "PF0", "PF1", "PF2",
 		       "PF3", "PF4", "PF5";
 		function = "sdc0";
-		drive-strength = <30>;
+		drive-strength = <10>;
 		bias-pull-up;
 		power-source = <3300>;
 	};
