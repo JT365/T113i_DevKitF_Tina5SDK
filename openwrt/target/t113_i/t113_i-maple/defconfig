@@ -49,12 +49,8 @@ CONFIG_TARGET_EXT4_BLOCKSIZE_4K=y
 # CONFIG_TARGET_EXT4_BLOCKSIZE_2K is not set
 # CONFIG_TARGET_EXT4_BLOCKSIZE_1K is not set
 CONFIG_TARGET_EXT4_BLOCKSIZE=4096
-# CONFIG_TARGET_EXT4_JOURNAL is not set
-CONFIG_TARGET_ROOTFS_SQUASHFS=y
-CONFIG_KERNEL_SQUASHFS_XZ=y
-# CONFIG_KERNEL_SQUASHFS_ZLIB is not set
-# CONFIG_KERNEL_SQUASHFS_LZO is not set
-CONFIG_TARGET_SQUASHFS_BLOCK_SIZE=256
+CONFIG_TARGET_EXT4_JOURNAL=y
+# CONFIG_TARGET_ROOTFS_SQUASHFS is not set
 CONFIG_TARGET_UBIFS_FREE_SPACE_FIXUP=y
 CONFIG_TARGET_UBIFS_JOURNAL_SIZE=""
 CONFIG_TARGET_IMAGES_GZIP=y
@@ -3043,7 +3039,7 @@ CONFIG_FIRMWARE_PATH="/lib/firmware/"
 # CONFIG_PACKAGE_ti-3410-firmware is not set
 # CONFIG_PACKAGE_ti-5052-firmware is not set
 # CONFIG_PACKAGE_wil6210-firmware is not set
-# CONFIG_PACKAGE_wireless-regdb is not set
+CONFIG_PACKAGE_wireless-regdb=y
 # CONFIG_PACKAGE_wl12xx-firmware is not set
 # CONFIG_PACKAGE_wl18xx-firmware is not set
 # CONFIG_PACKAGE_xr819-firmware is not set
@@ -3349,14 +3345,14 @@ CONFIG_PACKAGE_kmod-fuse=y
 # CONFIG_PACKAGE_kmod-gpadc_key is not set
 # CONFIG_PACKAGE_kmod-hid is not set
 # CONFIG_PACKAGE_kmod-hid-generic is not set
-CONFIG_PACKAGE_kmod-input-core=y
+# CONFIG_PACKAGE_kmod-input-core is not set
 # CONFIG_PACKAGE_kmod-input-evdev is not set
 # CONFIG_PACKAGE_kmod-input-joydev is not set
 # CONFIG_PACKAGE_kmod-input-matrixkmap is not set
 # CONFIG_PACKAGE_kmod-input-polldev is not set
 # CONFIG_PACKAGE_kmod-input-touchscreen-ads7846 is not set
 # CONFIG_PACKAGE_kmod-input-uinput is not set
-CONFIG_PACKAGE_kmod-touchscreen-gt9xxnew=y
+# CONFIG_PACKAGE_kmod-touchscreen-gt9xxnew is not set
 # end of Input modules
 
 #
