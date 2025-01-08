@@ -707,7 +707,7 @@
 	spi_slave_mode = <0>;
 	spi0_cs_number = <1>;
 	spi0_cs_bitmap = <1>;
-	status = "okay";
+	status = "disabled";
 
 	w25q128:w25q128@0 {
 		compatible = "jedec,spi-nor";
@@ -717,7 +717,7 @@
 		spi-tx-bus-width=<0x4>;
 		#address-cells = <1>;
                 #size-cells = <1>;
-		status="okay";
+		status="disabled";
 	};
 };
 
@@ -730,16 +730,6 @@
 	spi1_cs_number = <1>;
         spi1_cs_bitmap = <1>;
 	status = "disabled";
-
-	spi_board1@0 {
-		device_type = "spi_board1";
-		compatible = "rohm,dh2228fv";
-		spi-max-frequency = <0x5f5e100>;
-		reg = <0x0>;
-		spi-rx-bus-width = <0x4>;
-		spi-tx-bus-width = <0x4>;
-		status = "disabled";
-	};
 };
 
 &ledc {
@@ -1171,6 +1161,7 @@ pull up or pull down(default 0), driver level(default 1), data>
 	lcd_io_phase        = <0x0000>;
 	lcd_gamma_en        = <0>;
 	lcd_cmap_en         = <0>;
+	lcd_rb_swap         = <1>;
 	lcd_hv_clk_phase    = <1>;
 	lcd_hv_sync_polarity = <0>;
 	deu_mode            = <0>;
