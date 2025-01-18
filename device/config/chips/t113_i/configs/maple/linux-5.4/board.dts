@@ -648,23 +648,6 @@
 	pinctrl-1 = <&twi1_pins_b>;
 	pinctrl-names = "default", "sleep";
 	status = "disabled";
-
-	ctp@5d {
-		compatible = "allwinner,goodix";
-		device_type = "ctp";
-		reg = <0x5d>;
-		status = "disabled";
-		ctp_name = "gt9xxnew_ts";
-		ctp_twi_id = <0x1>;
-		ctp_twi_addr = <0x5d>;
-		ctp_screen_max_x = <0x1E0>;
-		ctp_screen_max_y = <0x1E0>;
-		ctp_revert_x_flag = <0x0>;
-		ctp_revert_y_flag = <0x0>;
-		ctp_exchange_x_y_flag = <0x0>;
-		ctp_int_port = <&pio PE 5 GPIO_ACTIVE_HIGH>;
-		ctp_wakeup = <&pio PE 4 GPIO_ACTIVE_HIGH>;
-	};
 };
 
 &twi2 { 
@@ -693,7 +676,10 @@
 		interrupt-parent = <&pio>;
 		interrupts = < PE 8 IRQ_TYPE_EDGE_FALLING>;
 		reset-gpios = <&pio PE 9 GPIO_ACTIVE_LOW>;
-				
+		touchscreen-size-x = <480>;
+                touchscreen-size-y = <854>;
+		touchscreen-inverted-x = <1>;
+		touchscreen-swapped-x-y = <1>;
 		status = "okay";
 	};
 };
@@ -1031,7 +1017,7 @@ chn_cfg_mode     : Hardware DE channel allocation config. 0:single display with 
 	hdmi_mode_check          = <1>;
 
 	disp_rotation_used       = <1>;
-	degree0                  = <3>;
+	degree0                  = <1>;
 	fb0_format               = <0>;
 	fb0_width                = <854>;
 	fb0_height               = <480>;
