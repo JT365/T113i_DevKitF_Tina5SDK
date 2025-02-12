@@ -19,6 +19,9 @@
 ::sysinit:/bin/mount -t sysfs sysfs /sys
 #::sysinit:/bin/mount -t tmpfs tmpfs /run
 ::sysinit:/bin/mount -o remount,rw /
+
+#fw_setenv, fw_printenv need /var/lock
+::sysinit:/bin/mkdir -p /var/lock
 ::sysinit:/bin/mkdir -p /dev/pts
 ::sysinit:/bin/mkdir -p /dev/shm
 ::sysinit:/bin/mount -a
