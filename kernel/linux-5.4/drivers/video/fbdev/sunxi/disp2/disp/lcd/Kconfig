@@ -181,6 +181,12 @@ config LCD_SUPPORT_TFT08006
 	---help---
 		If you want to support tft08006 panel for display driver, select it.
 
+config LCD_SUPPORT_WHYCANPI_LCD_620
+	bool "LCD support HSD088IPW1 panel"
+	default n
+	---help---
+		If you want to support HSD088IPW1 panel for display driver, select it.
+
 config LCD_SUPPORT_BP101WX1_206
 	bool "LCD support bp101wx1-206 panel"
 	default y

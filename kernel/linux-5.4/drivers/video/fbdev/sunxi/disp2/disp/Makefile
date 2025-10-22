@@ -59,6 +59,7 @@ disp-$(CONFIG_LCD_SUPPORT_TM_DSI_PANEL) += lcd/tm_dsi_panel.o
 disp-$(CONFIG_LCD_SUPPORT_ST7789V_CPU) += lcd/st7789v_cpu.o
 disp-$(CONFIG_LCD_SUPPORT_JD9366AB_3) += lcd/jd9366ab_3.o
 disp-$(CONFIG_LCD_SUPPORT_TFT08006) += lcd/tft08006.o
+disp-$(CONFIG_LCD_SUPPORT_WHYCANPI_LCD_620) += lcd/whycanpi_lcd_620.o
 disp-$(CONFIG_LCD_SUPPORT_BP101WX1_206) += lcd/bp101wx1-206.o
 disp-$(CONFIG_LCD_SUPPORT_FX070) += lcd/fx070.o
 disp-$(CONFIG_LCD_SUPPORT_K101IM2QA04) += lcd/k101im2qa04.o
