@@ -1138,6 +1138,7 @@ dtb-$(CONFIG_ARCH_SUN8IW15P1) += \
 dtb-$(CONFIG_ARCH_SUN8IW20) += \
 	board.dtb \
 	i8.dtb \
+	i8-180.dtb \
 	maple.dtb
 dtb-$(CONFIG_ARCH_TANGO) += \
 	tango4-vantage-1172.dtb
